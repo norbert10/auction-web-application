@@ -1,0 +1,21 @@
+.category-select{
+    width: 200px;
+}
+select, input{
+    width: 300px;
+    height: 30px;
+    margin: 10px;
+}
+.submission-btns{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.submission-btns input{
+    margin: 10px;
+}
+.send-btn, .cancel-btn{
+    width: 70px;
+}
+
+
