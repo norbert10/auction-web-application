@@ -1,3 +1,6 @@
+.parent{
+    text-align: center;
+}
 .category-select{
     width: 200px;
 }
@@ -17,5 +20,3 @@ select, input{
 .send-btn, .cancel-btn{
     width: 70px;
 }
-
-

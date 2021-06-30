@@ -9,7 +9,7 @@ export class Auction extends Component {
                     <h1>JB AUCTION</h1>
                     <p><em>Auction your item from anywhere, anytime</em></p>
                 </div>
-                <div>
+                <div class="item-description">
                     <select id="category-select">
                         <option value="electronics">Electronics</option>
                         <option value="motors">Motors</option>
@@ -21,9 +21,9 @@ export class Auction extends Component {
                     <input type="text" placeholder="Item Name"></input><br />
                     <input type="number" placeholder="Min Price"></input>
                     <br />
-                    <label for="img">Select image:</label>
+                    <label for="" class="image-selector">Select image:</label><br />
                     <input type="file" id="img" name="img" accept="image/*"></input><br/>
-                    <label for="img">Select video:</label>
+                    <label for="" class="video-selector">Select video:</label><br />
                     <input type="file" id="video" name="video" accept="video/*"></input>
                 </div>
                 <div class="submission-btns">

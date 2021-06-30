@@ -1,21 +1,33 @@
 import Login from './components/Login';
 import './App.css';
-import Contact from './components/Contact';
-import Home from './components/Home';
-import Auction from './components/Auction';
-import { Router } from '@reach/router';
-function App() {
-  return (
-    <div className="App">
-      <Router>
-        <Login  path="/login"/>
-        <Home  path="/"/>
-        <Contact path="/about" />
-        <Auction path="/auction" />
-      </Router>
+import Main from './components/Main';
+import React, { Component } from 'react'
 
-    </div>
-  );
+export class App extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      IsLoggedIn: false
+    }
+    
+    this.AllowLogin=this.AllowLogin.bind(this);
+  }
+  AllowLogin() {
+    this.setState({ IsLoggedIn: true })
+  }
+
+  render() {
+    return (
+      <div>
+        {(this.state.IsLoggedIn ?
+          <Main />
+          :
+          <Login action={this.AllowLogin}/>
+        )}
+      </div>
+    )
+  }
 }
 
-export default App;
+export default App

@@ -1,0 +1,39 @@
+.Nav-container{
+    position: sticky;
+    top: 0%;
+    z-index: 1;
+}
+.Nav{
+    width: 80%;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    margin-left: 200px;
+}
+.Nav-links{
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+    font-size: 24px;
+}
+.linkText{
+    padding: 10px;
+}
+.Nav-links:hover{
+    background-color: black;
+    transition: background 1s ease-in;
+    font-weight: bold;
+}
+.nav-section-two:hover{
+    font-weight: bold;
+    color: black;
+}
+.Menu-bar{
+    margin: 20px;
+    align-items: center;
+    color: black;
+    font-size: 30px;
+}
+.Menu-bar span{
+    color: black;
+}

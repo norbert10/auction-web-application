@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
+import '../styles/Contact.css'
 
 export class Contact extends Component {
     render() {
         return (
-            <div style={{backgroundColor:"teal",height:"100vh"}}>
+            <div /*style={{backgroundColor:"teal"}} */className="Contact-main">
                 <header>
                 <h1>HELP DESK</h1>
                 <h3>Dear user, we are at your service any time you are in need of help of any kind</h3>

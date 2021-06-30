@@ -1,5 +1,6 @@
 body{
-    background-color: wheat;
+    /*background-color: wheat;*/
+    background-color: #e3eaf4;
     scroll-behavior: smooth;
     width: 100%;
 
@@ -17,20 +18,20 @@ body{
     justify-content: space-around;
     list-style-type: none;
 }
-.search-box{
+/* .search-box{
     position: absolute;
     transform: translate(-5%, -5%);
-    height: 40px;
+    height: 60px;
     border-radius: 40px;
     padding: 10px;
     background: #303036;
-}
+} */
 .search-box{
     position: absolute;
     top: 6%;
     right: 2%;
     transform: translate(-5%, -5%);
-    height: 30px;
+    height: 60px;
     border-radius: 40px;
     padding: 10px;
     background: #303036;
@@ -52,21 +53,78 @@ body{
     background: none;
     outline: none;
     float: left;
-    padding: 0%;
     color: white;
     font-size: 20px;
     transition: 0.4s;
     width: 0px;
+    padding-bottom: 30px;
+    margin-top: 5px;
 }
 .search-box:hover > .search-txt{
     width: 160px;
     padding: 0 6px;
-
 }
 
 .search-box:hover > .search-btn{
     background: white;
+    margin-top: 8px;
 }
+.search-box:hover > .search-txt{
+    padding-bottom: 10px;
+}
+
+
+.carousel{
+    width: 80%;
+    height: 700px;
+    margin: 20px auto;
+}
+.CarouselInner{
+    height: 100%;
+    width: 100%;
+    margin: 20px auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+}
+.CarouselInner img{
+    width: 100%;
+    height: 700px;
+    vertical-align: middle;
+}
+.CarouselInner .left{
+    flex: 5%;
+    height: 100%;
+    background-color: rgb(0, 0, 0, 0.6);
+    display: grid;
+    place-items: center;
+    color: white;
+    cursor: pointer;
+}
+.CarouselInner .center{
+    flex: 90%;
+    height: 100%;
+}
+.CarouselInner .right{
+    flex: 5%;
+    height: 100%;
+    background-color: rgb(0, 0, 0, 0.6);
+    display: grid;
+    place-items: center;
+    color: white;
+    cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
 
 #container li:hover{
     background-color: #000;
@@ -86,7 +144,8 @@ body{
 }
 .slideImage{
     max-width: 100%;
-    max-height: 900px;
+    max-height: 700px;
+    text-align: center;
 }
 #all{
     margin-top: 20px;
@@ -157,4 +216,14 @@ a{
 }
 .footer-content h3{
     color: teal;
+}
+#text{
+    text-align: center;
+    margin-right: 80px;
+}
+#text h1{
+    color: rgba(0,163,202,255);
+}
+.courasel-slide{
+    text-align: center;
 }

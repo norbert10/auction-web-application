@@ -85,6 +85,7 @@ export class Login extends Component {
 
                 </div>
                 <div className="forgt-panel">
+                    <button onClick={this.props.action}>Login</button>
                     <a href="#">Reset Password</a>
                 </div>
             </div>
