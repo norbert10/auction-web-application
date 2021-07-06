@@ -37,3 +37,23 @@
 .Menu-bar span{
     color: black;
 }
+.Bar-Elements{
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    background-color: rgb(0, 0, 0, 0.7);
+}
+.navbar-toggle{
+    display: flex;
+    flex-direction: column;
+}
+.nav-menu{
+    height: 0px;
+    transition: 1.5s;
+}
+.nav-manu-items{
+    display: none;
+}
+.Menu-bar span:hover{
+    cursor: pointer;
+}

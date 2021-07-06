@@ -16,7 +16,19 @@ select, input{
 }
 .submission-btns input{
     margin: 10px;
+    
 }
 .send-btn, .cancel-btn{
     width: 70px;
+}
+.item-details{
+    background-color: 	rgba(0,163,202,255);
+    width: 40%;
+    margin: 10px auto;
+}
+.item-description input, .category-select{
+    margin: 10px;
+    width: 70%;
+    background-color: black;
+    color: white;
 }

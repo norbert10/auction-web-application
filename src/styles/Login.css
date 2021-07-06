@@ -12,6 +12,7 @@
     padding-top: 20px;
     opacity: 1;
     margin-bottom: 3em;
+    text-align: center;
 }
 button:focus{
     outline: 0px;
@@ -28,7 +29,7 @@ button:active{
    /* margin: 0 auto 100px;*/
     margin: 0;
     padding: 45px;
-    max-width: 360px;
+    max-width: 460px;
     text-align: center;
 }
 .form-group input{
@@ -59,34 +60,20 @@ form, .forgot-panel{
     margin: 10px;
     text-align: center;
     text-transform: uppercase;
-    background-color: #ACAF50;
+    /* background-color: #ACAF50; */
+    background-color: teal;
     font-family: Arial, Helvetica, sans-serif;
     padding-bottom: 25px;
-    border-radius: 20px;
     cursor: pointer;
-    /*
-    
-    font-family: "Roboto", sans-serif;
-    text-transform: uppercase;
-    outline: 0;
-    background-color: #ACAF50;
-    width: 100%;
-    border: 0;
-    margin: 10px;
-    text-align: center;
-    height: 30px;
-    padding-bottom: 50px;
-    width: 160px;
-    padding: 15px;
-    color: #FFFFFF;
-    font-size: 14px;
-    cursor: pointer;
-    */
+   
 }
 #loginform .submit:hover{
-    background-color: teal;
-    transition: background 1s ease;
+    transition: background 0.3s ease;
     font-weight: bold;
+    background-color: green;
+    color: white;
+    width: 200px;
+    height: 40px;
 }
 
 .nav-buttons .toggle-btn{
@@ -105,14 +92,16 @@ form, .forgot-panel{
     margin: 10px;
     text-align: center;
     text-transform: uppercase;
-    background-color: #ACAF50;
+    background-color: teal;
     font-family: Arial, Helvetica, sans-serif;
     padding-bottom: 25px;
-    border-radius: 20px;
     cursor: pointer;
 }
 #registerform .submit:hover{
-    background-color: teal;
-    transition: background 1s ease;
+    transition: background 0.3s ease;
     font-weight: bold;
+    background-color: green;
+    color: white;
+    width: 200px;
+    height: 40px;
 }

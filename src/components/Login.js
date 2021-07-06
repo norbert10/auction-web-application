@@ -64,7 +64,7 @@ export class Login extends Component {
                         <label for="username">USERNAME/EMAIL</label>
                         <input type="text" id="username" />
                         <label for="password">PASSWORD</label>
-                        <input type="text" id="password" required/>
+                        <input type="password" id="password"  required/>
                         <input type="submit" value="login" className="submit" />
                     </form>
                     <form action="" id="registerform">
