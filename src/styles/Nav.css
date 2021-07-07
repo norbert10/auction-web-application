@@ -49,11 +49,33 @@
 }
 .nav-menu{
     height: 0px;
+    background-color: rgba(37, 37, 37, 0.74);
     transition: 1.5s;
+    margin: 40px;
 }
 .nav-manu-items{
     display: none;
+    background-color: #060b26;
+    width: 20%;
+    margin-top: 0px;
+    top: 10px; 
 }
 .Menu-bar span:hover{
     cursor: pointer;
+}
+
+.menu-hover{
+    width: 80%;
+    line-height: 40px;
+    padding: 10px;
+    font-size: 20px;
+    margin-left: 0px;
+}
+
+.menu-hover:hover{
+    background-color: rgba(0,163,202,255);
+    color: white;
+    font-weight: bold;
+    margin-left: 15px;
+    transition: background 1s ease;
 }

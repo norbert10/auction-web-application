@@ -6,7 +6,8 @@ import { FaGavel } from 'react-icons/fa';
 import { FaProductHunt } from "react-icons/fa";
 import { FaPhone } from "react-icons/fa";
 import { FaBars } from 'react-icons/fa';
-export class Nav extends Component {
+
+class Nav extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -14,6 +15,7 @@ export class Nav extends Component {
         }
         this.showSidebar = this.showSidebar.bind(this);
     }
+    
     showSidebar() {
         if (document.getElementById('nav-menu').style.height === '0px') {
             document.getElementById('cont').style.display = "block"
@@ -47,12 +49,12 @@ export class Nav extends Component {
                 <nav id="nav-menu">
                     <ul className="nav-manu-items" id="cont">
                         <li className="navbar-toggle">
-                            <Link to="/"><span><FaHome />Home</span></Link>
-                            <Link to="/contact"><span><FaPhone />Contacts</span></Link>
-                            <Link to="/auction"><span><FaGavel />Auction</span></Link>
-                            <Link to="/products"><span><FaProductHunt />Products</span></Link>
-                            <Link to="/kill"><span>My Account</span></Link>
-                            <Link to="/kill"><span>Logout</span></Link>
+                            <Link to="/" className="menu-hover"><span ><FaHome />Home</span></Link>
+                            <Link to="/contact" className="menu-hover"><span><FaPhone />Contacts</span></Link>
+                            <Link to="/auction" className="menu-hover"><span><FaGavel />Auction</span></Link>
+                            <Link to="/products" className="menu-hover"><span><FaProductHunt />Products</span></Link>
+                            <Link to="/kill" className="menu-hover"><span>My Account</span></Link>
+                            <Link to="/kill" className="menu-hover"><span>Logout</span></Link>
                         </li>
                     </ul>
                 </nav>
