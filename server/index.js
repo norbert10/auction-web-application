@@ -41,16 +41,31 @@ app.get('/', (req, res) => {
 // })
 
 //query to insert new user to the database
-app.post("/userlogin",(req,res)=>{
+app.post("/requestlogin",(req,res)=>{
     console.log(req.body)
-    const username = req.body.username
-    const password = req.body.password
-    db.query('INSERT INTO login (username, password) VALUES (?,?)', [username, password], (err, result)=>{
+    const firstname = req.body.firstname
+    const lastname = req.body.lastname
+    const pass = req.body.pass
+    const phone = req.body.phone
+    const email = req.body.email
+    db.query('INSERT INTO user (firstname, lastname, pass, phone, email) VALUES (?,?,?,?,?)', 
+    [firstname, lastname, pass, phone, email], (err, result)=>{
         if(err){
             console.log(err)
         }
         console.log(result);
         res.status(200).end();
+    })
+})
+
+app.post(`/requestlogin`,(req,res)=>{
+    console.log(req.body);
+    const{email,password}=req.body;
+    let q =`SELECT EXISTS(SELECT * FROM user WHERE email='${email}' AND pass='${pass}') As Isavaible;`
+    connection.query(q,(err,result)=>{
+        if(err)throw err;
+        console.log(result);
+        res.status(200).send(JSON.stringify(result[0].Isavaible));
     })
 })
 
