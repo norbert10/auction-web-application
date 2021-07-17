@@ -55,8 +55,8 @@ export class Login extends Component {
             alert("cannot be empty")
         } else {
             Axios.post('/userlogin', {
-                username: this.usernameReg,
-                password: this.passwordReg
+                username: this.state.usernameReg,
+                password: this.state.passwordReg
             }).then((response) => {
                 console.log(response)
             }).catch((err) => {
@@ -98,6 +98,7 @@ export class Login extends Component {
                     <button id="loginBtn" class="active toggle-btn" onClick={this.toggleForm}>{this.state.btnText}</button>
                 </div>
                 <div className="form-group">
+                
                     <form id='loginform'>
                         <label for="username">USERNAME/EMAIL</label>
                         <input type="text" name="usernameReg" value={this.state.usernameReg} onChange={this.changeHandler} id="username" />
