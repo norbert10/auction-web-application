@@ -24,7 +24,8 @@ export class App extends Component {
       email: ''
     }
 
-    this.requestLogin = this.requestLogin.bind(this);
+    this.requestRegistration = this.requestRegistration.bind(this);
+    this.loginRequest=this.loginRequest.bind(this);
     this.toggleForm = this.toggleForm.bind(this);
     this.changeHandler = this.changeHandler.bind(this)
     // this.register = this.register.bind(this)
@@ -51,34 +52,38 @@ export class App extends Component {
   }
 
   //to post to the databse  
-  // register(e) {
-  //   e.preventDefault();
-  //   if (this.state.usernameReg === '' || this.state.passwordReg === '') {
-  //     alert("cannot be empty")
-  //   } else {
-  //     Axios.post('/userlogin', {
-  //       username: this.state.usernameReg,
-  //       password: this.state.passwordReg
-  //     }).then((response) => {
-  //       alert(res.data.allowed);
-  //       this.setState({
-  //         IsLoggedIn: res.data.allowed
-  //       })      }).catch((err) => {
-  //       alert(err.message);
-
-  //     })
-  //   }
-
-  // }
-
-
-  requestLogin(e) {
+  loginRequest(e) {
     e.preventDefault();
-    if (this.state.firstname === '' || this.state.lastname === '' || this.state.password===''|| 
-    this.state.phoneNo===''|| this.state.email==='') {
+    if (this.state.usernameReg === '' || this.state.passwordReg === '') {
       alert("cannot be empty")
     } else {
-      Axios.post('/requestlogin', {
+      Axios.post('/userlogin', {
+        username: this.state.usernameReg,
+        password: this.state.passwordReg
+      })
+      .then((res) => {
+        console.log(res.data)
+        alert(res.data);
+        this.setState({
+          IsLoggedIn: res.data
+        })
+      })
+      .catch((err) => {
+        alert(err.message);
+
+      })
+    }
+
+  }
+
+
+  requestRegistration(e) {
+    e.preventDefault();
+    if (this.state.firstname === '' || this.state.lastname === '' || this.state.password === '' ||
+      this.state.phoneNo === '' || this.state.email === '') {
+      alert("cannot be empty")
+    } else {
+      Axios.post('/registerrequest', {
         firstname: this.state.firstname,
         lastname: this.state.lastname,
         pass: this.state.password,
@@ -113,7 +118,7 @@ export class App extends Component {
                 <input type="text" name="usernameReg" value={this.state.usernameReg} onChange={this.changeHandler} id="username" />
                 <label for="password">PASSWORD</label>
                 <input type="password" name="passwordReg" value={this.state.passwordReg} onChange={this.changeHandler} id="password" required />
-                <input type="button" className="submit" value="LOgin" onClick={this.requestLogin} />
+                <input type="button" className="submit" value="login" onClick={this.loginRequest}/>
               </form>
               <form id="registerform">
                 <label for="fname">FIRST NAME</label>
@@ -123,12 +128,12 @@ export class App extends Component {
                 <label for="password" >PASSWORD</label>
                 <input type="password" id="pass" name="password" value={this.state.password} onChange={this.changeHandler} required />
                 <label for="cpassword">CONFIRM PASSWORD</label>
-                <input type="password" id="pass" name="password"  required />
+                <input type="password" id="pass" name="password" required />
                 <label for="phone" >PHONE NUMBER</label>
                 <input type="tel" id="phone" name="phoneNo" value={this.state.phone} onChange={this.changeHandler} required />
                 <label for="email">EMAIL ADDRESS</label>
                 <input type="email" id="email" name="email" value={this.state.email} onChange={this.changeHandler} required />
-                <input type="button" value="register" className="submit" onClick={this.requestLogin}/>
+                <input type="button" value="register" className="submit" onClick={this.requestRegistration} />
               </form>
 
             </div>

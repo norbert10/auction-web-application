@@ -41,7 +41,7 @@ app.get('/', (req, res) => {
 // })
 
 //query to insert new user to the database
-app.post("/requestlogin",(req,res)=>{
+app.post("/registerrequest",(req,res)=>{
     console.log(req.body)
     const firstname = req.body.firstname
     const lastname = req.body.lastname
@@ -58,19 +58,31 @@ app.post("/requestlogin",(req,res)=>{
     })
 })
 
-app.post(`/requestlogin`,(req,res)=>{
+// app.post(`/requestlogin`,(req,res)=>{
+//     console.log(req.body);
+//     const{email,pass}=req.body;
+//     let q =`SELECT EXISTS(SELECT * FROM user WHERE email='${email}' AND pass='${pass}') As Isavaible;`
+//     connection.query(q,(err,result)=>{
+//         if(err)throw err;
+//         console.log(result);
+//         res.status(200).send(JSON.stringify(result[0].Isavaible));
+//     })
+// })
+
+app.post(`/userlogin`,(req,res)=>{
     console.log(req.body);
-    const{email,password}=req.body;
-    let q =`SELECT EXISTS(SELECT * FROM user WHERE email='${email}' AND pass='${pass}') As Isavaible;`
-    connection.query(q,(err,result)=>{
+    const{username,password} = req.body;
+    console.log(username,password);
+    let q =`SELECT EXISTS(SELECT * FROM user WHERE email='${username}' AND pass='${password}') As Isavaible;`
+    db.query(q,(err,result)=>{
         if(err)throw err;
         console.log(result);
         res.status(200).send(JSON.stringify(result[0].Isavaible));
     })
 })
 
-app.listen(3001, () => {
-    console.log('Server running on port 3001')
+app.listen(5000, () => {
+    console.log('Server running on port 5000')
 })
 
 
