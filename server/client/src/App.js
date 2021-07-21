@@ -70,7 +70,6 @@ export class App extends Component {
       })
       .catch((err) => {
         alert(err.message);
-
       })
     }
 

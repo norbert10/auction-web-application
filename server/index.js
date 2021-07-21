@@ -27,9 +27,9 @@ db.getConnection((err) => {
     }
 })
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/Login.js')
-});
+// app.get('/', (req, res) => {
+//     res.sendFile(__dirname + '/Login.js')
+// });
 
 // app.get("/", (req,res)=>{
 //     const sqlInsert = 'INSERT INTO login (username, password) VALUES ("Evans", "Odhiambo");'
@@ -79,6 +79,45 @@ app.post(`/userlogin`,(req,res)=>{
         console.log(result);
         res.status(200).send(JSON.stringify(result[0].Isavaible));
     })
+})
+
+app.post("/products",(req,res)=>{
+    console.log(req.body)
+    const category = req.body.category
+    const item_name = req.body.item_name
+    const item_price = req.body.item_price
+    const phone_number = req.body.phone_number
+    const location = req.body.location
+    const item_image = req.body.item_image
+    const item_video = req.body.item_video
+    db.query('INSERT INTO products (category, item_name, item_price, phone_number, location, item_image, item_video) VALUES (?,?,?,?,?,?,?)', 
+    [category, item_name, item_price, phone_number, location, item_image, item_video], (err, result)=>{
+        if(err){
+            console.log(err)
+        }
+        console.log(result);
+        res.status(200).end();
+    })
+})
+
+//retrieving data from database to display it on the product page
+app.get(`/allproducts`,(req,res)=>{
+    
+    let sql ='SELECT * FROM products;'
+    db.query(sql,(err,result)=>{
+        if(err) throw err;
+        res.status(200).end(JSON.stringify(result));
+    })
+
+    // let data=[
+    //     {item_name:"unga",item_price:80,location:'umoja',phone_number:3879370},
+    //     {item_name:"unga",item_price:80,location:'umoja',phone_number:3879370},
+    //     {item_name:"unga",item_price:80,location:'umoja',phone_number:3879370},
+    //     {item_name:"unga",item_price:80,location:'umoja',phone_number:3879370},
+    //     {item_name:"unga",item_price:80,location:'umoja',phone_number:3879370},
+    //     {item_name:"unga",item_price:80,location:'umoja',phone_number:3879370},
+    //     {item_name:"unga",item_price:80,location:'umoja',phone_number:3879370}
+    // ]
 })
 
 app.listen(5000, () => {

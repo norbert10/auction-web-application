@@ -5,6 +5,7 @@ import Landing from '../components/Landing';
 import Auction from '../components/Auction';
 import Nav from '../components/Nav';
 import About from '../components/About'
+import Products from '../components/Products'
 
 
 export class Main extends Component {
@@ -16,6 +17,7 @@ export class Main extends Component {
                     <Landing path="/" />
                     <Contact path="/contact" />
                     <Auction path="/auction" />
+                    <Products path="/products" />
                     <About path="/about" />
                 </Router>
 
