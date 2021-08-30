@@ -6,6 +6,7 @@ import Auction from '../components/Auction';
 import Nav from '../components/Nav';
 import About from '../components/About'
 import Products from '../components/Products'
+import Search from '../components/Search';
 
 
 export class Main extends Component {
@@ -19,6 +20,7 @@ export class Main extends Component {
                     <Auction path="/auction" />
                     <Products path="/products" />
                     <About path="/about" />
+                    <Search path="/search"/>
                 </Router>
 
             </div>

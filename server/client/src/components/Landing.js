@@ -10,30 +10,11 @@ function Landing() {
     const [currImg, setCurrImg] = useState(0);
     return (
         <div style={{ position: "relative" }}>
-            <div class="search-box">
-                <input class="search-txt" type="text" placeholder="Search here"></input>
-                <a class="search-btn" href="#"> <i class="fa fa-search" aria-hidden="true"><FaSearch /></i></a>
-            </div>
             <div id="all">
                 <div id="text">
                     <h1>JB AUCTION</h1>
-                    <p>Bid from anywhere, anytime</p>
                 </div>
             </div>
-            {/* <div class="courasel-container">
-            <div class="courasel-slide visible">
-                <img class="slideImage" src="images/car.jpg"></img>
-            </div>
-            <div class="courasel-slide hidden">
-                <img class="courasel-slide slideImage hidden" src="images/phone.jpg"></img>
-            </div>
-            <div>
-                <img class="slideImage hidden" src="images/tv.jpg"></img>
-            </div>
-
-        </div>
-        <button class="btn btnprev" id="prevbtn">Prev</button>
-        <button class="btn btnnxt" id="nxtbtn">Next</button> */}
             <div className="carousel">
                 <div className="CarouselInner" style={{ backgroundImage: `url(${images[currImg].img})` }}
                 >

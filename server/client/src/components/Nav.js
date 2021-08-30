@@ -41,13 +41,13 @@ class Nav extends Component {
                         <Link className="Nav-links" to="/auction"><span className="linkText"><FaGavel />Auction</span></Link>
                         <Link className="Nav-links" to="/products"><span className="linkText"><FaProductHunt />Products</span></Link>
                         <Link className="Nav-links" to="/about"><span className="linkText"><FaAddressCard />About</span></Link>
+                        <Link className="Nav-links" to="/search"><span className="linkText"><FaAddressCard />Search_Result</span></Link>
                     </div>
                     <div className="nav-section-two" style={{ width: "20%", padding: "20px" }}>
                         <a href="/kill"><span style={{ color: "white" }}>Logout</span></a>
                     </div>
 
                 </div>
-                {/* <BarLinks /> */}
                 <nav id="nav-menu">
                     <ul className="nav-manu-items" id="cont">
                         <li className="navbar-toggle">

@@ -8,9 +8,7 @@ const bodyParser = require('body-parser');
 //to post every object we send from the backend
 // app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json())
-
-// app.use(cors());
+app.use(bodyParser.json());
 
 //creating a connection
 const db = mysql.createPool({
@@ -25,20 +23,7 @@ db.getConnection((err) => {
     } else {
         console.log("mysql connected....")
     }
-})
-
-// app.get('/', (req, res) => {
-//     res.sendFile(__dirname + '/Login.js')
-// });
-
-// app.get("/", (req,res)=>{
-//     const sqlInsert = 'INSERT INTO login (username, password) VALUES ("Evans", "Odhiambo");'
-//     db.query(sqlInsert, (err, result)=>{
-//         res.send("Hello world");  
-//     })
-
-    	                            
-// })
+});
 
 //query to insert new user to the database
 app.post("/registerrequest",(req,res)=>{
@@ -58,17 +43,7 @@ app.post("/registerrequest",(req,res)=>{
     })
 })
 
-// app.post(`/requestlogin`,(req,res)=>{
-//     console.log(req.body);
-//     const{email,pass}=req.body;
-//     let q =`SELECT EXISTS(SELECT * FROM user WHERE email='${email}' AND pass='${pass}') As Isavaible;`
-//     connection.query(q,(err,result)=>{
-//         if(err)throw err;
-//         console.log(result);
-//         res.status(200).send(JSON.stringify(result[0].Isavaible));
-//     })
-// })
-
+//login authentication
 app.post(`/userlogin`,(req,res)=>{
     console.log(req.body);
     const{username,password} = req.body;
@@ -80,6 +55,8 @@ app.post(`/userlogin`,(req,res)=>{
         res.status(200).send(JSON.stringify(result[0].Isavaible));
     })
 })
+
+//inserting products into the database
 
 app.post("/products",(req,res)=>{
     console.log(req.body)
@@ -109,6 +86,16 @@ app.get(`/allproducts`,(req,res)=>{
         res.status(200).end(JSON.stringify(result));
     })
 
+//searching productss
+app.post(`/results`, (req, res)=>{
+    console.log(req.params.searchkey)
+    let search = `SELECT * FROM products WHERE category LIKE  "%${req.body.searchkey}%";`
+    db.query(search, (err, result)=>{
+        if(err) throw err;
+        res.status(200).end(JSON.stringify(result));
+    })
+})
+
     // let data=[
     //     {item_name:"unga",item_price:80,location:'umoja',phone_number:3879370},
     //     {item_name:"unga",item_price:80,location:'umoja',phone_number:3879370},
@@ -120,44 +107,9 @@ app.get(`/allproducts`,(req,res)=>{
     // ]
 })
 
+
 app.listen(5000, () => {
     console.log('Server running on port 5000')
 })
-
-
-// function Auth(req, res, next) {
-//     let v = false;
-//     if (!v) {
-//         return  res.redirect('/login');
-//     } else {
-//         return next()
-//     }
-// }
-
-// app.use(`/`,express.static(path.join(__dirname + '/client/build')));
-
-// //To check if the database is connected
-
-// app.get('/login', (req, res) => {
-//     res.send(
-//         `<!DOCTYPE html>
-//         <html lang="en">
-//         <head>
-//             <meta charset="UTF-8">
-//             <meta http-equiv="X-UA-Compatible" content="IE=edge">
-//             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-//             <title>Document</title>
-//         </head>
-//         <body>
-//             <H1>Login</H1>
-//         </body>
-//         </html>`
-//     )
-// })
-
-// //for any other request they should br redirected to index.html
-// app.get('*',(req, res) => {
-//     res.sendFile(path.join(__dirname, '/client/build', 'index.html'));
-// })
 
 
