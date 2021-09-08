@@ -12,7 +12,8 @@ class Nav extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            sideBar: false
+            sideBar: false,
+            // firstname: 'Norbert'
         }
         this.showSidebar = this.showSidebar.bind(this);
     }
@@ -30,7 +31,7 @@ class Nav extends Component {
     render() {
         return (
             <div>
-                <div className="Nav-container" style={{ display: "flex", justifyContent: "space-between", width: "100%", backgroundColor: "rgba(0,163,202,255)" }}>
+                <div className="Nav-container" style={{ display: "flex", justifyContent: "space-between", width: "100%" }}>
                     <div className="Menu-bar">
                         <span onClick={this.showSidebar}><FaBars /></span>
 

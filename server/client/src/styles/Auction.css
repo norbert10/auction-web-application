@@ -15,31 +15,56 @@ select, input{
     justify-content: center;
 }
 .submission-btns input{
-    margin: 10px;
+    margin: 15px;
     
 }
 .send-btn, .cancel-btn{
     width: 70px;
 }
 .item-details{
-    background-color: 	rgba(0,163,202,255);
+    /* background-color: 	rgba(0,163,202,255); */
+    background-color: teal;
     width: 40%;
     margin: 10px auto;
 }
-.item-description input, .category-select{
+.item-description input, .item-description #category-select{
     margin: 10px;
     width: 70%;
-    background-color: black;
+    background-color: #e3eaf4;
+    color: black;
+    font-size: 20px;
+}
+
+.submission-btns .send-btn, .submission-btns .cancel-btn{
+
+}
+
+.submission-btns .send-btn:hover, .submission-btns .cancel-btn:hover{
+    background-color: teal;
+    cursor: pointer;
     color: white;
+    transform: scale(1.5);
+}
+
+.item-description #img:hover{
+    cursor: pointer;
 }
 
 .success{
-    background-color: orange;
-    padding: 2px;
-    font-size: 22px;
-    width: 13%;
-    margin: 0px auto;
-    display: flex;
-    flex-direction: row;
+    display: none;
+    font-size: 20px;
+}
+.success button{
+    width: 95px;
+    height: 55px;
+    margin: 15px;
+    background-color: grey;
+    color: white;
+    /* text-transform: uppercase; */
+}
 
+.success button:hover{
+    cursor: pointer;
+    background-color: teal;
+    transform: scale(1.2);
 }

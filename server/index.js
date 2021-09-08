@@ -96,6 +96,47 @@ app.post(`/results`, (req, res)=>{
     })
 })
 
+//Reset User details
+app.post('/resetDetails', (req, res)=>{
+    let resetQuery = `UPDATE user SET pass = REPLACE(pass, ${pass}, (?);`
+    db.query(resetQuery, (err, result)=>{
+        if(err) throw err;
+        res.status(200).end(JSON.stringify(result));
+    })
+})
+
+//To see all bidders of an item
+app.get('/allBidders', (req, res)=>{
+    let bidders = 'SELECT * FROM bidders;'
+    db.query(bidders, (err, result)=>{
+        if(err) throw err;
+        res.status(200).end(JSON.stringify(result))
+    })
+})
+
+app.post("/postBids",(request, response)=>{
+    console.log(request.body)
+    // const item_id = request.body.item_id
+    // const bidder_firstname = request.body.bidder_firstname
+    // const bidder_lastname = request.body.bidder_lastname
+    // const bidder_email = request.body.bidder_email
+    const bidder_phone = request.body.bidder_phone
+    const bidder_price = request.body. bidder_price
+    const bidder_location = request.body.bidder_location
+    db.query(
+    'INSERT INTO bidders (bidder_phone, bidder_price, bidder_location) VALUES (?,?,?)',
+     [bidder_phone, bidder_price, bidder_location], (err, result)=>{
+        if(err){
+            console.log(err)
+        }
+        console.log(result);
+        res.status(200).end();
+     })
+
+})
+
+
+
     // let data=[
     //     {item_name:"unga",item_price:80,location:'umoja',phone_number:3879370},
     //     {item_name:"unga",item_price:80,location:'umoja',phone_number:3879370},
@@ -111,5 +152,3 @@ app.post(`/results`, (req, res)=>{
 app.listen(5000, () => {
     console.log('Server running on port 5000')
 })
-
-

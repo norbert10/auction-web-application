@@ -226,8 +226,12 @@ a{
     margin-right: 80px;
 }
 #text h1{
-    color: rgba(0,163,202,255);
+    color: teal;
+    /* color: rgba(0,163,202,255); */
 }
 .courasel-slide{
     text-align: center;
+}
+.about{
+    margin-left: 15px;
 }

@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Axios from 'axios';
 import './styles/Login.css'
+import axios from 'axios';
 
 export class App extends Component {
   constructor(props) {
@@ -21,13 +22,16 @@ export class App extends Component {
       lastname: '',
       password: '',
       phoneNo: '',
-      email: ''
+      email: '',
+      show_reset: false
     }
 
     this.requestRegistration = this.requestRegistration.bind(this);
-    this.loginRequest=this.loginRequest.bind(this);
+    this.loginRequest = this.loginRequest.bind(this);
     this.toggleForm = this.toggleForm.bind(this);
     this.changeHandler = this.changeHandler.bind(this)
+    this.toggleReset = this.toggleReset.bind(this)
+    this.resetDetails = this.resetDetails.bind(this)
     // this.register = this.register.bind(this)
 
   }
@@ -55,22 +59,22 @@ export class App extends Component {
   loginRequest(e) {
     e.preventDefault();
     if (this.state.usernameReg === '' || this.state.passwordReg === '') {
-      alert("cannot be empty")
+      alert("Please input login credentials")
     } else {
       Axios.post('/userlogin', {
         username: this.state.usernameReg,
         password: this.state.passwordReg
       })
-      .then((res) => {
-        console.log(res.data)
-        // alert(res.data);
-        this.setState({
-          IsLoggedIn: res.data
+        .then((res) => {
+          console.log(res.data)
+          // alert(res.data);
+          this.setState({
+            IsLoggedIn: res.data
+          })
         })
-      })
-      .catch((err) => {
-        alert(err.message);
-      })
+        .catch((err) => {
+          alert(err.message);
+        })
     }
 
   }
@@ -80,7 +84,7 @@ export class App extends Component {
     e.preventDefault();
     if (this.state.firstname === '' || this.state.lastname === '' || this.state.password === '' ||
       this.state.phoneNo === '' || this.state.email === '') {
-      alert("cannot be empty")
+      alert("Please fill in the input fields")
     } else {
       Axios.post('/registerrequest', {
         firstname: this.state.firstname,
@@ -100,6 +104,36 @@ export class App extends Component {
     }
   }
 
+  resetDetails(e){
+    e.preventDefault();
+    if(this.firstname==''|| this.lastname==''||this.phoneNo==''||this.password==''){
+      alert('Fields cannot be empty')
+    }else{
+      axios.post('/resetDetails', {
+        firstname: this.state.firstname,
+        lastname: this.state.lastname,
+        phone: this.state.phoneNo,
+        pass: this.state.password,
+
+      })
+      .then((res) => {
+        this.setState({
+          IsLoggedIn: res.data
+        })
+      })
+      .catch((err) => {
+        alert(err.message)
+      })
+    }
+  }
+
+  toggleReset(){
+    (!this.state.show_reset) ? 
+    this.setState({show_reset: true})
+    :
+    this.setState({show_reset: false})
+  }
+
 
   render() {
     return (
@@ -117,7 +151,7 @@ export class App extends Component {
                 <input type="text" name="usernameReg" value={this.state.usernameReg} onChange={this.changeHandler} id="username" />
                 <label for="password">PASSWORD</label>
                 <input type="password" name="passwordReg" value={this.state.passwordReg} onChange={this.changeHandler} id="password" required />
-                <input type="button" className="submit" value="login" onClick={this.loginRequest}/>
+                <input type="button" className="submit" value="login" onClick={this.loginRequest} />
               </form>
               <form id="registerform">
                 <label for="fname">FIRST NAME</label>
@@ -136,9 +170,23 @@ export class App extends Component {
               </form>
 
             </div>
-            <div className="forgt-panel">
-              <button onClick={this.requestLogin}>Login</button>
-              <a href="#">Reset Password</a>
+            <div className="reset-panel">
+              <button onClick={this.toggleReset}>Reset Login Details?</button>
+              {
+                this.state.show_reset ?
+                  <>
+                    <div>
+                      <input type="text" placeholder="Enter Firstname" />
+                      <input type="text" placeholder="Enter lastname" />
+                      <input type="text" placeholder="Enter Phone-number" />
+                      <input type="text" placeholder="Enter New password" />
+                      <input type="text" placeholder="Confirm New password" /><br />
+                    </div>
+                    <button onClick={this.resetDetails}>Submit</button>
+                  </>
+                  :
+                  null
+              }
             </div>
           </div>
         )}
