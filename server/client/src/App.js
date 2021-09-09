@@ -23,7 +23,8 @@ export class App extends Component {
       password: '',
       phoneNo: '',
       email: '',
-      show_reset: false
+      show_reset: false,
+      username:'Norbert'
     }
 
     this.requestRegistration = this.requestRegistration.bind(this);
@@ -69,7 +70,8 @@ export class App extends Component {
           console.log(res.data)
           // alert(res.data);
           this.setState({
-            IsLoggedIn: res.data
+            IsLoggedIn: res.data.IsLoggedIn,
+            username:res.data.usernamee
           })
         })
         .catch((err) => {
@@ -109,7 +111,7 @@ export class App extends Component {
     if(this.firstname==''|| this.lastname==''||this.phoneNo==''||this.password==''){
       alert('Fields cannot be empty')
     }else{
-      axios.post('/resetDetails', {
+      axios.post('/rs', {
         firstname: this.state.firstname,
         lastname: this.state.lastname,
         phone: this.state.phoneNo,
@@ -139,7 +141,7 @@ export class App extends Component {
     return (
       <div>
         {(this.state.IsLoggedIn ?
-          <Main />
+          <Main username={this.state.username} />
           :
           <div className="login-register-wrapper">
             <div className="nav-buttons">
@@ -176,11 +178,11 @@ export class App extends Component {
                 this.state.show_reset ?
                   <>
                     <div>
-                      <input type="text" placeholder="Enter Firstname" />
-                      <input type="text" placeholder="Enter lastname" />
-                      <input type="text" placeholder="Enter Phone-number" />
-                      <input type="text" placeholder="Enter New password" />
-                      <input type="text" placeholder="Confirm New password" /><br />
+                      <input type="text" name='firstname' value={this.state.firstname} onChange={this.changeHandler}placeholder="Enter Firstname" />
+                      <input type="text" name='lastname' value={this.state.lastname} onChange={this.changeHandler}placeholder="Enter lastname" />
+                      <input type="text" name='phoneNo' value={this.state.phoneNo} onChange={this.changeHandler}placeholder="Enter Phone-number" />
+                      <input type="text" name='password' value={this.state.password} onChange={this.changeHandler}placeholder="Enter New password" />
+                      <input type="text" name='password' value={this.state.password} onChange={this.changeHandler}placeholder="Confirm New password" /><br />
                     </div>
                     <button onClick={this.resetDetails}>Submit</button>
                   </>

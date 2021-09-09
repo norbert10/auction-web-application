@@ -14,7 +14,7 @@ export class Main extends Component {
     render() {
         return (
             <div className="Main">
-                <Nav/>
+                <Nav username={this.props.username}/>
                 <Router>
                     <Landing path="/" />
                     <Auction path="/auction" />

@@ -71,6 +71,9 @@
     padding: 10px;
     font-size: 20px;
     margin-left: 0px;
+    background-color: rgba(0,163,202,255);
+    color: white;
+    font-weight: bold;
 }
 
 .menu-hover:hover{
@@ -79,4 +82,7 @@
     font-weight: bold;
     margin-left: 15px;
     transition: background 1s ease;
+}
+.strong-user{
+    text-transform: uppercase;
 }

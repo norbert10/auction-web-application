@@ -57,10 +57,12 @@ class Nav extends Component {
                             <Link to="/auction" className="menu-hover"><span><FaGavel />Auction</span></Link>
                             <Link to="/products" className="menu-hover"><span><FaProductHunt />Products</span></Link>
                             <Link to="/kill" className="menu-hover"><span>My Account</span></Link>
-                            <Link to="/about" className="menu-hover"><span>About</span></Link>
+                            <Link to="/about" className="menu-hover"><span>About</span></Link>                            
                             <Link to="/kill" className="menu-hover"><span>Logout</span></Link>
                         </li>
                     </ul>
+                    <span className="menu-hover">Welcome, <strong className="strong-user">{this.props.username}</strong></span>
+
                 </nav>
             </div>
 

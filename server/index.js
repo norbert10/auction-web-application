@@ -7,7 +7,8 @@ const bodyParser = require('body-parser');
 
 //to post every object we send from the backend
 // app.use(express.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(cors())
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 //creating a connection
@@ -26,39 +27,59 @@ db.getConnection((err) => {
 });
 
 //query to insert new user to the database
-app.post("/registerrequest",(req,res)=>{
+app.post("/registerrequest", (req, res) => {
     console.log(req.body)
     const firstname = req.body.firstname
     const lastname = req.body.lastname
     const pass = req.body.pass
     const phone = req.body.phone
     const email = req.body.email
-    db.query('INSERT INTO user (firstname, lastname, pass, phone, email) VALUES (?,?,?,?,?)', 
-    [firstname, lastname, pass, phone, email], (err, result)=>{
-        if(err){
-            console.log(err)
-        }
-        console.log(result);
-        res.status(200).end();
-    })
+    db.query('INSERT INTO user (firstname, lastname, pass, phone, email) VALUES (?,?,?,?,?)',
+        [firstname, lastname, pass, phone, email], (err, result) => {
+            if (err) {
+                console.log(err)
+            }
+            console.log(result);
+            res.status(200).end();
+        })
 })
 
 //login authentication
-app.post(`/userlogin`,(req,res)=>{
+app.post(`/userlogin`, (req, res) => {
     console.log(req.body);
-    const{username,password} = req.body;
-    console.log(username,password);
-    let q =`SELECT EXISTS(SELECT * FROM user WHERE email='${username}' AND pass='${password}') As Isavaible;`
-    db.query(q,(err,result)=>{
-        if(err)throw err;
-        console.log(result);
-        res.status(200).send(JSON.stringify(result[0].Isavaible));
+    const { username, password } = req.body;
+    console.log(username, password);
+
+    let q = `SELECT EXISTS(SELECT * FROM user WHERE email='${username}' AND pass='${password}') As Isavaible;`
+    db.query(q, (err, result) => {
+        if (err) throw err;
+        var dataa = {}
+
+        dataa.IsLoggedIn = result[0].Isavaible;
+
+
+        if (dataa.IsLoggedIn) {
+            let q = `SELECT firstname FROM user WHERE email='${username}' AND pass='${password}';`
+            db.query(q, (err, result) => {
+                if (err) throw err;
+                dataa.usernamee = result[0].firstname;
+                console.log(dataa.usernamee)
+                console.log(dataa)
+                res.status(200).send(JSON.stringify(dataa));
+
+            })
+        } else {
+            dataa.usernamee = 'unknown';
+            res.status(200).send(JSON.stringify(dataa));
+
+        }
+
     })
 })
 
 //inserting products into the database
 
-app.post("/products",(req,res)=>{
+app.post("/products", (req, res) => {
     console.log(req.body)
     const category = req.body.category
     const item_name = req.body.item_name
@@ -67,75 +88,75 @@ app.post("/products",(req,res)=>{
     const location = req.body.location
     const item_image = req.body.item_image
     const item_video = req.body.item_video
-    db.query('INSERT INTO products (category, item_name, item_price, phone_number, location, item_image, item_video) VALUES (?,?,?,?,?,?,?)', 
-    [category, item_name, item_price, phone_number, location, item_image, item_video], (err, result)=>{
-        if(err){
-            console.log(err)
-        }
-        console.log(result);
-        res.status(200).end();
-    })
+    db.query('INSERT INTO products (category, item_name, item_price, phone_number, location, item_image, item_video) VALUES (?,?,?,?,?,?,?)',
+        [category, item_name, item_price, phone_number, location, item_image, item_video], (err, result) => {
+            if (err) {
+                console.log(err)
+            }
+            console.log(result);
+            res.status(200).end();
+        })
 })
 
 //retrieving data from database to display it on the product page
-app.get(`/allproducts`,(req,res)=>{
-    
-    let sql ='SELECT * FROM products;'
-    db.query(sql,(err,result)=>{
-        if(err) throw err;
+app.get(`/allproducts`, (req, res) => {
+
+    let sql = 'SELECT * FROM products;'
+    db.query(sql, (err, result) => {
+        if (err) throw err;
         res.status(200).end(JSON.stringify(result));
     })
 
-//searching productss
-app.post(`/results`, (req, res)=>{
-    console.log(req.body.searchkey)
-    let search = `SELECT * FROM products WHERE category LIKE  "%${req.body.searchkey}%";`
-    db.query(search, (err, result)=>{
-        if(err) throw err;
-        res.status(200).end(JSON.stringify(result));
+    //searching productss
+    app.post(`/results`, (req, res) => {
+        console.log(req.body.searchkey)
+        let search = `SELECT * FROM products WHERE category LIKE  "%${req.body.searchkey}%";`
+        db.query(search, (err, result) => {
+            if (err) throw err;
+            res.status(200).end(JSON.stringify(result));
+        })
     })
-})
 
-//Reset User details
-app.post('/resetDetails', (req, res)=>{
-    console.log(req.body)
-    const{password,phone,firstname,lastname}=req.body;
-    let resetQuery = `UPDATE user SET pass='${password}' WHERE firstname='${firstname}' AND lastname='${lastname}' AND phone='${phone}';`
-    db.query(resetQuery, (err, result)=>{
-        if(err) throw err;
-        res.status(200).end(JSON.stringify(result));
+    //Reset User details
+    app.post('/rs', (req, res) => {
+        console.log(req.body)
+        const { pass, phone, firstname, lastname } = req.body;
+        let resetQuery = `UPDATE user SET pass='${pass}' WHERE firstname='${firstname}' AND lastname='${lastname}' AND phone='${phone}';`
+        db.query(resetQuery, (err, result) => {
+            if (err) throw err;
+            res.status(200).end(JSON.stringify(result));
+        })
     })
-})
 
-//To see all bidders of an item
-app.get('/allBidders', (req, res)=>{
-    let bidders = 'SELECT * FROM bidders;'
-    db.query(bidders, (err, result)=>{
-        if(err) throw err;
-        res.status(200).end(JSON.stringify(result))
+    //To see all bidders of an item
+    app.get('/allBidders', (req, res) => {
+        let bidders = 'SELECT * FROM bidders;'
+        db.query(bidders, (err, result) => {
+            if (err) throw err;
+            res.status(200).end(JSON.stringify(result))
+        })
     })
-})
 
-app.post("/postBids",(request, response)=>{
-    console.log(request.body)
-    // const item_id = request.body.item_id
-    // const bidder_firstname = request.body.bidder_firstname
-    // const bidder_lastname = request.body.bidder_lastname
-    // const bidder_email = request.body.bidder_email
-    const bidder_phone = request.body.bidder_phone
-    const bidder_price = request.body. bidder_price
-    const bidder_location = request.body.bidder_location
-    db.query(
-    'INSERT INTO bidders (bidder_phone, bidder_price, bidder_location) VALUES (?,?,?)',
-     [bidder_phone, bidder_price, bidder_location], (err, result)=>{
-        if(err){
-            console.log(err)
-        }
-        console.log(result);
-        res.status(200).end();
-     })
+    app.post("/postBids", (request, response) => {
+        console.log(request.body)
+        // const item_id = request.body.item_id
+        // const bidder_firstname = request.body.bidder_firstname
+        // const bidder_lastname = request.body.bidder_lastname
+        // const bidder_email = request.body.bidder_email
+        const bidder_phone = request.body.bidder_phone
+        const bidder_price = request.body.bidder_price
+        const bidder_location = request.body.bidder_location
+        db.query(
+            'INSERT INTO bidders (bidder_phone, bidder_price, bidder_location) VALUES (?,?,?)',
+            [bidder_phone, bidder_price, bidder_location], (err, result) => {
+                if (err) {
+                    console.log(err)
+                }
+                console.log(result);
+                res.status(200).end();
+            })
 
-})
+    })
 
 
 
