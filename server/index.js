@@ -88,7 +88,7 @@ app.get(`/allproducts`,(req,res)=>{
 
 //searching productss
 app.post(`/results`, (req, res)=>{
-    console.log(req.params.searchkey)
+    console.log(req.body.searchkey)
     let search = `SELECT * FROM products WHERE category LIKE  "%${req.body.searchkey}%";`
     db.query(search, (err, result)=>{
         if(err) throw err;
@@ -98,7 +98,9 @@ app.post(`/results`, (req, res)=>{
 
 //Reset User details
 app.post('/resetDetails', (req, res)=>{
-    let resetQuery = `UPDATE user SET pass = REPLACE(pass, ${pass}, (?);`
+    console.log(req.body)
+    const{password,phone,firstname,lastname}=req.body;
+    let resetQuery = `UPDATE user SET pass='${password}' WHERE firstname='${firstname}' AND lastname='${lastname}' AND phone='${phone}';`
     db.query(resetQuery, (err, result)=>{
         if(err) throw err;
         res.status(200).end(JSON.stringify(result));

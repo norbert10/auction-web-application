@@ -38,10 +38,10 @@ class Nav extends Component {
                     </div>
                     <div className="Nav">
                         <Link className="Nav-links" to="/"><span className="linkText"><FaHome className="fa" />Home</span></Link>
-                        <Link className="Nav-links" to="/contact"><span className="linkText"><FaPhone />Contacts</span></Link>
                         <Link className="Nav-links" to="/auction"><span className="linkText"><FaGavel />Auction</span></Link>
                         <Link className="Nav-links" to="/products"><span className="linkText"><FaProductHunt />Products</span></Link>
                         <Link className="Nav-links" to="/about"><span className="linkText"><FaAddressCard />About</span></Link>
+                        <Link className="Nav-links" to="/contact"><span className="linkText"><FaPhone />Contacts</span></Link>
                         <Link className="Nav-links" to="/search"><span className="linkText"><FaAddressCard />Search_Result</span></Link>
                     </div>
                     <div className="nav-section-two" style={{ width: "20%", padding: "20px" }}>

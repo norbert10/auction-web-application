@@ -27,7 +27,8 @@ export class Products extends Component {
             bidder_email: '',
             bidder_phone: '',
             bidder_price: '',
-            bidder_location: ''
+            bidder_location: '',
+            message:'message here'
         }
 
         this.onChangeSearch = this.onChangeSearch.bind(this);
@@ -88,27 +89,7 @@ export class Products extends Component {
     onChangeSearch() {
         axios.post(`/results`, { searchkey: this.state.searchKey })
             .then((res) => {
-                // if (res.data.length > 0) {
-                //     this.setState({ daata: res.data })
-
-                // }
-                this.setState({ daata: res.data })
-
-                // if(res.data.length < 1){
-                //     document.getElementsByClassName('search_noresult')[0].style.display = 'block'
-                //     document.getElementsByClassName('products')[0].style.display = 'none'
-                //     if(this.state.searchKey===null){
-                //         this.getAllProducts()
-                //     }
-                // } 
-
-                // else {
-                //     document.getElementsByClassName('search_noresult')[0].style.display = 'block'
-                //     document.getElementsByClassName('products')[0].style.display = 'none'
-                //     if(this.state.searchKey.length<1){
-                //         this.getAllProducts()
-                //     }
-                // }
+                this.setState({ daata: res.data });
             })
             .catch((err) => {
                 alert(err.message);
@@ -150,6 +131,7 @@ export class Products extends Component {
                     </div>
                 </div>
                 <div style={{ display: "flex", flexWrap: "wrap" }} className="products">
+                    {this.state.message}
                     {
                         this.state.daata.map((item, index) => (
                             <ProductWrapper name={item.item_name} price={item.item_price} location={item.location} phone={item.phone_number} image={item.item_image} />
@@ -265,7 +247,7 @@ class ProductWrapper extends Component {
 
     render() {
         return (
-            <div style={{ maxWidth: "900px", Height: "auto", border: "2px solid grey", margin: "10px auto", padding: "20px" }} className="mappedItems">
+            <div style={{ maxWidth: "60%", Height: "auto", border: "2px solid grey", margin: "10px auto", padding: "20px" }} className="mappedItems">
                 <div className="item_info">
                     <div>Image here</div>
                     <div>image: {this.props.image}</div>

@@ -1,5 +1,10 @@
 .parent{
     text-align: center;
+    outline: auto;
+    width: 80%;
+    margin: 0 auto;
+    margin-bottom: 5px;
+    padding-bottom: 10px;
 }
 .category-select{
     width: 200px;

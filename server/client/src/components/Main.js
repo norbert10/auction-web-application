@@ -7,6 +7,7 @@ import Nav from '../components/Nav';
 import About from '../components/About'
 import Products from '../components/Products'
 import Search from '../components/Search';
+import Footer from './Footer';
 
 
 export class Main extends Component {
@@ -16,12 +17,13 @@ export class Main extends Component {
                 <Nav/>
                 <Router>
                     <Landing path="/" />
-                    <Contact path="/contact" />
                     <Auction path="/auction" />
                     <Products path="/products" />
                     <About path="/about" />
+                    <Contact path="/contact" />
                     <Search path="/search"/>
                 </Router>
+                <Footer/>
 
             </div>
         )
