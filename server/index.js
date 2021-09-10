@@ -59,12 +59,13 @@ app.post(`/userlogin`, (req, res) => {
 
 
         if (dataa.IsLoggedIn) {
-            let q = `SELECT firstname FROM user WHERE email='${username}' AND pass='${password}';`
+            let q = `SELECT id,firstname FROM user WHERE email='${username}' AND pass='${password}';`
             db.query(q, (err, result) => {
                 if (err) throw err;
                 dataa.usernamee = result[0].firstname;
+                dataa.userId=result[0].id
                 console.log(dataa.usernamee)
-                console.log(dataa)
+                console.log(dataa.userId)
                 res.status(200).send(JSON.stringify(dataa));
 
             })
@@ -129,31 +130,29 @@ app.get(`/allproducts`, (req, res) => {
     })
 
     //To see all bidders of an item
-    app.get('/allBidders', (req, res) => {
-        let bidders = 'SELECT * FROM bidders;'
+    app.get(`/allBids/:productId`, (req, res) => {
+        let bidders = `SELECT user.firstname,user.lastname,user.phone,bids.bidder_price,bids.bidder_location,bids.bidder_time,bids.visible FROM user\
+        INNER JOIN bids ON user.id=bids.bidder_Id AND product_Id =${req.params.productId};`
         db.query(bidders, (err, result) => {
             if (err) throw err;
             res.status(200).end(JSON.stringify(result))
         })
     })
 
-    app.post("/postBids", (request, response) => {
-        console.log(request.body)
+    app.post("/postBids", (req, res) => {
+        console.log(req.body)
         // const item_id = request.body.item_id
         // const bidder_firstname = request.body.bidder_firstname
         // const bidder_lastname = request.body.bidder_lastname
         // const bidder_email = request.body.bidder_email
-        const bidder_phone = request.body.bidder_phone
-        const bidder_price = request.body.bidder_price
-        const bidder_location = request.body.bidder_location
-        db.query(
-            'INSERT INTO bidders (bidder_phone, bidder_price, bidder_location) VALUES (?,?,?)',
-            [bidder_phone, bidder_price, bidder_location], (err, result) => {
-                if (err) {
-                    console.log(err)
-                }
-                console.log(result);
-                res.status(200).end();
+        let d=new Date();
+        let bidding_time =`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}-${d.getHours()}-${d.getMinutes()}-${d.getSeconds()}`
+        const{productId,bidder_phone,bidder_Id,bidder_location,bidder_price,visibility}=req.body;
+        let q =`INSERT INTO bids(product_Id, bidder_Id, bidder_price, bidder_location,bidder_time, bidder_phone,visible)\
+        VALUES (${productId},${bidder_Id},${bidder_price},'${bidder_location}','${bidding_time}','${bidder_phone})',${visibility});`
+        db.query(q,(err, result) => {
+                if (err) throw err;
+                res.status(200).end(JSON.stringify(result));
             })
 
     })

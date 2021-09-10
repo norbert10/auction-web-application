@@ -24,7 +24,8 @@ export class App extends Component {
       phoneNo: '',
       email: '',
       show_reset: false,
-      username:'Norbert'
+      username:'unknown',
+      userId:null
     }
 
     this.requestRegistration = this.requestRegistration.bind(this);
@@ -71,7 +72,8 @@ export class App extends Component {
           // alert(res.data);
           this.setState({
             IsLoggedIn: res.data.IsLoggedIn,
-            username:res.data.usernamee
+            username:res.data.usernamee,
+            userId:res.data.userId
           })
         })
         .catch((err) => {
@@ -141,7 +143,7 @@ export class App extends Component {
     return (
       <div>
         {(this.state.IsLoggedIn ?
-          <Main username={this.state.username} />
+          <Main username={this.state.username} userId={this.state.userId} />
           :
           <div className="login-register-wrapper">
             <div className="nav-buttons">

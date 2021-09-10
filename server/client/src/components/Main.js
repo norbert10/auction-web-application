@@ -18,7 +18,7 @@ export class Main extends Component {
                 <Router>
                     <Landing path="/" />
                     <Auction path="/auction" />
-                    <Products path="/products" />
+                    <Products path="/products" userId={this.props.userId} />
                     <About path="/about" />
                     <Contact path="/contact" />
                     <Search path="/search"/>

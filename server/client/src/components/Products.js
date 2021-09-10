@@ -28,7 +28,7 @@ export class Products extends Component {
             bidder_phone: '',
             bidder_price: '',
             bidder_location: '',
-            message:'message here'
+            // message:'message here'
         }
 
         this.onChangeSearch = this.onChangeSearch.bind(this);
@@ -134,7 +134,7 @@ export class Products extends Component {
                     {this.state.message}
                     {
                         this.state.daata.map((item, index) => (
-                            <ProductWrapper name={item.item_name} price={item.item_price} location={item.location} phone={item.phone_number} image={item.item_image} />
+                            <ProductWrapper bidder_Id={this.props.userId} productId={item.item_no} name={item.item_name} price={item.item_price} location={item.location} phone={item.phone_number} image={item.item_image} />
                         ))
                     }
                 </div>
@@ -154,30 +154,24 @@ class ProductWrapper extends Component {
         this.state = {
             show: false,
             showBids: false,
-            // bids: [
-            //     { productId: 2, bidderPhone: "0799623291", bidPrice: 250000, bidderLocation: "Nairobi" },
-            //     { productId: 2, bidderPhone: "0799623291", bidPrice: 250000, bidderLocation: "Nairobi" },
-            //     { productId: 2, bidderPhone: "0799623291", bidPrice: 250000, bidderLocation: "Nairobi" },
-            //     { productId: 2, bidderPhone: "0799623291", bidPrice: 250000, bidderLocation: "Nairobi" },
-            //     { productId: 2, bidderPhone: "0799623291", bidPrice: 250000, bidderLocation: "Nairobi" },
-            //     { productId: 2, bidderPhone: "0799623291", bidPrice: 250000, bidderLocation: "Nairobi" },
-            //     { productId: 2, bidderPhone: "0799623291", bidPrice: 250000, bidderLocation: "Nairobi" },
-            // ],
             bidAvailabe: [],
-            item_id: '',
+            productId: this.props.productId,
+            bidder_Id: this.props.bidder_Id,
             bidder_firstname: '',
             bidder_lastname: '',
             bidder_email: '',
             bidder_phone: '',
             bidder_price: '',
-            bidder_location: ''
+            bidder_location: '',
+            Ischecked: 0
         }
         this.toggleBid = this.toggleBid.bind(this);
         this.toggleShowBids = this.toggleShowBids.bind(this);
         this.openChat = this.openChat.bind(this);
         this.postBids = this.postBids.bind(this)
         this.handleChange = this.handleChange.bind(this)
-        this.seeBidders = this.seeBidders.bind(this)
+        this.seeBidders = this.seeBidders.bind(this);
+        this.radioHandler = this.radioHandler.bind(this);
     }
 
     toggleBid() {
@@ -188,11 +182,12 @@ class ProductWrapper extends Component {
         )
     }
     toggleShowBids() {
-        (!this.state.showBids ?
+        if (!this.state.showBids) {
             this.setState({ showBids: true })
-            :
+            this.seeBidders();
+        } else {
             this.setState({ showBids: false })
-        )
+        }
     }
 
     openChat(e) {
@@ -202,50 +197,54 @@ class ProductWrapper extends Component {
     //post bidds to the database
     postBids(e) {
         e.preventDefault();
-        if(this.state.bidder_price==''||this.state.bidder_phone==''||this.state.bidder_location==''){
+        if (this.state.bidder_price == '' || this.state.bidder_phone == '' || this.state.bidder_location == '') {
             alert("Fill the required fields")
-        }else{
-            document.getElementsByClassName("bid_toggle")[0].style.display="none"
-        axios.post('/postBids', {
-            // item_id: this.state.item_id,
-            // bidder_firstname: this.state.bidder_firstname,
-            // bidder_lastname: this.state.bidder_lastname,
-            // bidder_email: this.state.bidder_email,
-            bidder_phone: this.state.bidder_phone,
-            bidder_price: this.state.bidder_price,
-            bidder_location: this.state.bidder_location
-
-        })
-            .then((res) => {
-                this.setState({
-                    bidAvailabe: res.data
+        } else {
+            document.getElementsByClassName("bid_toggle")[0].style.display = "none"
+            axios.post('/postBids', {
+                bidder_phone: this.state.bidder_phone,
+                bidder_price: this.state.bidder_price,
+                bidder_location: this.state.bidder_location,
+                bidder_visibility: this.state.Ischecked,
+                productId: this.state.productId,
+                visibility: this.state.Ischecked,
+                bidder_Id: this.state.bidder_Id
+            })
+                .then((res) => {
+                    alert("Bid sent")
                 })
-            })
-            .catch((err) => {
-                alert(err.message)
-            })
+                .catch((err) => {
+                    alert(err.message)
+                })
         }
-        
+
     }
 
     handleChange(e) {
         this.setState({ [e.target.name]: e.target.value })
     }
 
-    componentDidMount() {
-        this.seeBidders();
-    }
 
     //code to see bidders of an item
     seeBidders() {
-        axios.get('/allBidders').then((res) => {
-            this.setState({ bidAvailabe: res.data })
-        }).catch((err) => {
-            alert(err.message)
-        })
+        axios.get(`/allBids/${this.state.productId}`)
+            .then((res) => {
+                this.setState({ bidAvailabe: res.data })
+            }).catch((err) => {
+                alert(err.message)
+            })
+    }
+    //
+    radioHandler() {
+        (this.state.Ischecked ?
+            this.setState({ Ischecked: 0 })
+            :
+            this.setState({ Ischecked: 1 })
+        )
     }
 
     render() {
+        let baton = <button>pay</button>
         return (
             <div style={{ maxWidth: "60%", Height: "auto", border: "2px solid grey", margin: "10px auto", padding: "20px" }} className="mappedItems">
                 <div className="item_info">
@@ -256,6 +255,7 @@ class ProductWrapper extends Component {
                     <div>price: {this.props.price}</div>
                     <div>location: {this.props.location}</div>
                     <div>phone: {this.props.phone}</div>
+                    <div>product_Id: {this.props.productId}</div>
 
                     <div className="btn-product">
                         <div><button onClick={this.openChat} value={this.props.phone}>chat</button></div>
@@ -265,9 +265,13 @@ class ProductWrapper extends Component {
                                 this.state.show ?
                                     <>
                                         <div className="bid_toggle">
-                                            <div><input name="bidder_phone" placeholder="bidderPhone" value={this.state.bidderPhone} onChange={this.handleChange} /></div>
+                                            <div><input name="bidder_phone" placeholder="bidderPhone" value={this.state.bidder_phone} onChange={this.handleChange} /></div>
                                             <div><input name="bidder_price" placeholder="bidderPrice" value={this.state.bidder_price} onChange={this.handleChange} /></div>
-                                            <div><input name="bidder_location" placeholder="bidderLocation" value={this.state.bidderLocation} onChange={this.handleChange} /></div>
+                                            <div><input name="bidder_location" placeholder="bidderLocation" value={this.state.bidder_location} onChange={this.handleChange} /></div>
+                                            <div>
+                                                <label for="publicBidder">Public</label>
+                                                <input type="radio" id="anonymousBidder" name="bidder-identity" checked={this.state.Ischecked} onChange={this.radioHandler} />
+                                            </div>
                                             <div><button onClick={this.postBids}> PLACE BID</button></div>
                                         </div>
 
@@ -278,17 +282,31 @@ class ProductWrapper extends Component {
                         </div>
                         <div>
                             <button onClick={this.toggleShowBids}>show bids</button>
-                            {this.state.showBids ?
-                                // this.state.bids.map((b, i) => (
-                                //     // <div>ProductId: {b.productId} BidPrice: {b.bidPrice} bidderPhone: {b.bidderPhone} bidderLocation: {b.bidderLocation}</div>
-                                //     <div>ProductId: {this.props.bidder_phone} BidPrice: {this.props.bidder_price} bidderPhone: {this.props.bidder_location} </div>
-                                // ))
-                                this.state.bidAvailabe.map((b, i) => (
-                                    <div>ProductId: {b.bidder_phone} BidPrice: {b.bidder_price} bidderPhone: {b.bidder_location}</div>
-                                ))
-                                :
-                                null
-                            }
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Phone</td>
+                                    <td>Location</td>
+                                    <td>Price</td>
+                                    <td>Date</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.state.showBids ?
+                                    this.state.bidAvailabe.map((b, i) => (
+                                        <tr>
+                                            <td>{(b.visible ? `${b.firstname} ${b.lastname}` : "Anonymous")}</td>
+                                            <td>{b.firstname}-{b.lastname}</td>
+                                            <td>{(b.visible ? b.bidder_location : "Anonymous")}</td>
+                                            <td>{b.bidder_price}</td>
+                                            <td>{b.bidder_time.split('.')[0]}</td>
+                                            <td>{(b.visible ? baton: "low")}</td>
+                                        </tr>
+                                    ))
+                                    :
+                                    null
+                                }
+                            </tbody>
                         </div>
                     </div>
                 </div>
