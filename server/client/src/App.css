@@ -5,3 +5,37 @@
   cursor: pointer;
   font-size: 18px;
 }
+.reset-and-admin{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.reset-and-admin button:hover{
+  cursor: pointer;
+  background-color: wheat;
+  transform: scale(1.3);
+}
+.reset-and-admin button{
+  background-color: aliceblue;
+}
+
+.home-display{
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+
+}
+
+.login-line{
+  width: 100%;
+  background-color: teal;
+  color: teal;
+  height: 10px;
+}
+.login-heading{
+  text-align: center;
+}
+
+.success{
+  display: none;
+}

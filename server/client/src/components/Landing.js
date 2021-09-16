@@ -19,14 +19,37 @@ function Landing() {
                 <div className="CarouselInner" style={{ backgroundImage: `url(${images[currImg].img})` }}
                 >
                     {/* <img src={images[0].img} /> */}
-                        <div className="left" onClick={()=>{
-                            currImg > 0 && setCurrImg(currImg-1);
-                        }}><ArrowBackIosIcon /></div>
-                        <div className="center"></div>
-                        <div className="right" onClick={()=>{
-                            currImg < images.length-1 && setCurrImg(currImg+1);
-                        }}><ArrowForwardIosIcon /></div>
+                    <div className="left" onClick={() => {
+                        currImg > 0 && setCurrImg(currImg - 1);
+                    }}><ArrowBackIosIcon /></div>
+                    <div className="center"></div>
+                    <div className="right" onClick={() => {
+                        currImg < images.length - 1 && setCurrImg(currImg + 1);
+                    }}><ArrowForwardIosIcon /></div>
                 </div>
+            </div>
+            <div>
+                <h4>Rate us</h4>
+                <div className="ratings">
+                    <div>
+                        <label for="publicBidder">Excellent</label>
+                        <input type="radio" name="rate"/>
+                    </div>
+                    <div>
+                    <label for="publicBidder">Good</label>
+                        <input type="radio" name="rate"/>
+                    </div>
+                    <div>
+                    <label for="publicBidder">Fair</label>
+                        <input type="radio" name="rate" />
+                    </div>
+                    <div>
+                    <label for="publicBidder">Poor</label>
+                        <input type="radio" name="rate"/>
+                    </div>
+                </div>
+                <button>Rate</button>
+
             </div>
 
         </div>

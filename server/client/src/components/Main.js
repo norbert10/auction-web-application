@@ -8,20 +8,24 @@ import About from '../components/About'
 import Products from '../components/Products'
 import Search from '../components/Search';
 import Footer from './Footer';
+import Users from '../components/Users';
+import Feeds from './Feeds';
 
 
 export class Main extends Component {
     render() {
         return (
             <div className="Main">
-                <Nav username={this.props.username}/>
+                <Nav username={this.props.username} isAdmin={this.props.isAdmin}/>
                 <Router>
                     <Landing path="/" />
                     <Auction path="/auction" />
                     <Products path="/products" userId={this.props.userId} />
                     <About path="/about" />
                     <Contact path="/contact" />
-                    <Search path="/search"/>
+                    {/* <Search path="/search"/> */}
+                    <Users path="/users" />
+                    <Feeds path="/feeds" />
                 </Router>
                 <Footer/>
 

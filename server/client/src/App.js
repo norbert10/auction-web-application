@@ -6,6 +6,9 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Axios from 'axios';
 import './styles/Login.css'
 import axios from 'axios';
+import { FaCheck } from 'react-icons/fa'
+import Car from './Images/car.jpg';
+// import Homepage from './Images/homepage.jpg'
 
 export class App extends Component {
   constructor(props) {
@@ -24,8 +27,9 @@ export class App extends Component {
       phoneNo: '',
       email: '',
       show_reset: false,
-      username:'unknown',
-      userId:null
+      username: 'unknown',
+      userId: null,
+      IsAdmin:0
     }
 
     this.requestRegistration = this.requestRegistration.bind(this);
@@ -72,8 +76,9 @@ export class App extends Component {
           // alert(res.data);
           this.setState({
             IsLoggedIn: res.data.IsLoggedIn,
-            username:res.data.usernamee,
-            userId:res.data.userId
+            username: res.data.usernamee,
+            userId: res.data.userId,
+            IsAdmin:res.data.IsAdmin
           })
         })
         .catch((err) => {
@@ -90,6 +95,8 @@ export class App extends Component {
       this.state.phoneNo === '' || this.state.email === '') {
       alert("Please fill in the input fields")
     } else {
+      document.getElementsByClassName('home-display')[0].style.display = 'none'
+      document.getElementsByClassName('success')[0].style.display = 'block'
       Axios.post('/registerrequest', {
         firstname: this.state.firstname,
         lastname: this.state.lastname,
@@ -108,11 +115,11 @@ export class App extends Component {
     }
   }
 
-  resetDetails(e){
+  resetDetails(e) {
     e.preventDefault();
-    if(this.firstname==''|| this.lastname==''||this.phoneNo==''||this.password==''){
+    if (this.firstname === '' || this.lastname === '' || this.phoneNo ==='' || this.password === '') {
       alert('Fields cannot be empty')
-    }else{
+    } else {
       axios.post('/rs', {
         firstname: this.state.firstname,
         lastname: this.state.lastname,
@@ -120,78 +127,97 @@ export class App extends Component {
         pass: this.state.password,
 
       })
-      .then((res) => {
-        this.setState({
-          IsLoggedIn: res.data
+        .then((res) => {
+          this.setState({
+            IsLoggedIn: res.data
+          })
         })
-      })
-      .catch((err) => {
-        alert(err.message)
-      })
+        .catch((err) => {
+          alert(err.message)
+        })
     }
   }
 
-  toggleReset(){
-    (!this.state.show_reset) ? 
-    this.setState({show_reset: true})
-    :
-    this.setState({show_reset: false})
+  toggleReset() {
+    (!this.state.show_reset) ?
+      this.setState({ show_reset: true })
+      :
+      this.setState({ show_reset: false })
   }
 
 
   render() {
     return (
       <div>
+        <hr />
         {(this.state.IsLoggedIn ?
-          <Main username={this.state.username} userId={this.state.userId} />
+          <Main username={this.state.username} userId={this.state.userId} isAdmin={this.state.IsAdmin} />
           :
           <div className="login-register-wrapper">
+            <hr />
+            <div className="login-heading">
+              <h1>JB AUCTION</h1>
+            </div>
+            <hr className="login-line"/>
             <div className="nav-buttons">
               <button id="loginBtn" class="active toggle-btn" onClick={this.toggleForm}>{this.state.btnText}</button>
             </div>
-            <div className="form-group">
-              <form id='loginform'>
-                <label for="username">USERNAME/EMAIL</label>
-                <input type="text" name="usernameReg" value={this.state.usernameReg} onChange={this.changeHandler} id="username" />
-                <label for="password">PASSWORD</label>
-                <input type="password" name="passwordReg" value={this.state.passwordReg} onChange={this.changeHandler} id="password" required />
-                <input type="button" className="submit" value="login" onClick={this.loginRequest} />
-              </form>
-              <form id="registerform">
-                <label for="fname">FIRST NAME</label>
-                <input type="text" id="fname" name="firstname" value={this.state.firstname} onChange={this.changeHandler} required />
-                <label for="lname" >LAST NAME</label>
-                <input type="text" id="lname" name="lastname" value={this.state.lastname} onChange={this.changeHandler} required />
-                <label for="password" >PASSWORD</label>
-                <input type="password" id="pass" name="password" value={this.state.password} onChange={this.changeHandler} required />
-                <label for="cpassword">CONFIRM PASSWORD</label>
-                <input type="password" id="pass" name="password" required />
-                <label for="phone" >PHONE NUMBER</label>
-                <input type="tel" id="phone" name="phoneNo" value={this.state.phone} onChange={this.changeHandler} required />
-                <label for="email">EMAIL ADDRESS</label>
-                <input type="email" id="email" name="email" value={this.state.email} onChange={this.changeHandler} required />
-                <input type="button" value="register" className="submit" onClick={this.requestRegistration} />
-              </form>
+            <div className="home-display">
+              <div className="form-group">
+                <form id='loginform'>
+                  <label for="username">USERNAME/EMAIL</label>
+                  <input type="text" name="usernameReg" value={this.state.usernameReg} onChange={this.changeHandler} id="username" />
+                  <label for="password">PASSWORD</label>
+                  <input type="password" name="passwordReg" value={this.state.passwordReg} onChange={this.changeHandler} id="password" required />
+                  <input type="button" className="submit" value="login" onClick={this.loginRequest} />
+                </form>
+                <form id="registerform">
+                  <label for="fname">FIRST NAME</label>
+                  <input type="text" id="fname" name="firstname" value={this.state.firstname} onChange={this.changeHandler} required />
+                  <label for="lname" >LAST NAME</label>
+                  <input type="text" id="lname" name="lastname" value={this.state.lastname} onChange={this.changeHandler} required />
+                  <label for="password" >PASSWORD</label>
+                  <input type="password" id="pass" name="password" value={this.state.password} onChange={this.changeHandler} required />
+                  <label for="cpassword">CONFIRM PASSWORD</label>
+                  <input type="password" id="pass" name="password" required />
+                  <label for="phone" >PHONE NUMBER</label>
+                  <input type="tel" id="phone" name="phoneNo" value={this.state.phone} onChange={this.changeHandler} required />
+                  <label for="email">EMAIL ADDRESS</label>
+                  <input type="email" id="email" name="email" value={this.state.email} onChange={this.changeHandler} required />
+                  <input type="button" value="register" className="submit" onClick={this.requestRegistration} />
+                </form>
 
+              </div>
+              <div className="home-image">
+                {/* <img src={Car}></img> */}
+              </div>
             </div>
-            <div className="reset-panel">
-              <button onClick={this.toggleReset}>Reset Login Details?</button>
-              {
-                this.state.show_reset ?
-                  <>
-                    <div>
-                      <input type="text" name='firstname' value={this.state.firstname} onChange={this.changeHandler}placeholder="Enter Firstname" />
-                      <input type="text" name='lastname' value={this.state.lastname} onChange={this.changeHandler}placeholder="Enter lastname" />
-                      <input type="text" name='phoneNo' value={this.state.phoneNo} onChange={this.changeHandler}placeholder="Enter Phone-number" />
-                      <input type="text" name='password' value={this.state.password} onChange={this.changeHandler}placeholder="Enter New password" />
-                      <input type="text" name='password' value={this.state.password} onChange={this.changeHandler}placeholder="Confirm New password" /><br />
-                    </div>
-                    <button onClick={this.resetDetails}>Submit</button>
-                  </>
-                  :
-                  null
-              }
+            <div className="success">
+                    <p>Details submitted successfully <FaCheck /></p>
+                    <button onClick={this.displayAuction}>Back to Auction page</button>
+                </div>
+
+            <div className="reset-and-admin">
+              <div className="reset-panel">
+                <button onClick={this.toggleReset}>Reset Login Details?</button>
+                {
+                  this.state.show_reset ?
+                    <>
+                      <div>
+                        <input type="text" name='firstname' value={this.state.firstname} onChange={this.changeHandler} placeholder="Enter Firstname" />
+                        <input type="text" name='lastname' value={this.state.lastname} onChange={this.changeHandler} placeholder="Enter lastname" />
+                        <input type="text" name='phoneNo' value={this.state.phoneNo} onChange={this.changeHandler} placeholder="Enter Phone-number" />
+                        <input type="text" name='password' value={this.state.password} onChange={this.changeHandler} placeholder="Enter New password" />
+                        <input type="text" name='password' value={this.state.password} onChange={this.changeHandler} placeholder="Confirm New password" /><br />
+                      </div>
+                      <button onClick={this.resetDetails}>Submit</button>
+                    </>
+                    :
+                    null
+                }
+              </div>
             </div>
+
           </div>
         )}
       </div>

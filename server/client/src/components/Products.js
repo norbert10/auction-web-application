@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import '../styles/Products.css'
 import { FaSearch } from 'react-icons/fa'
 
+
 export class Products extends Component {
     constructor(props) {
         super(props)
@@ -86,6 +87,7 @@ export class Products extends Component {
         })
     }
 
+    //searching
     onChangeSearch() {
         axios.post(`/results`, { searchkey: this.state.searchKey })
             .then((res) => {
@@ -134,7 +136,7 @@ export class Products extends Component {
                     {this.state.message}
                     {
                         this.state.daata.map((item, index) => (
-                            <ProductWrapper bidder_Id={this.props.userId} productId={item.item_no} name={item.item_name} price={item.item_price} location={item.location} phone={item.phone_number} image={item.item_image} />
+                            <ProductWrapper bidder_Id={this.props.userId} productId={item.item_no} name={item.item_name} price={item.item_price} location={item.location} phone={item.phone_number} image={item.item_image} category={item.category} />
                         ))
                     }
                 </div>
@@ -157,13 +159,22 @@ class ProductWrapper extends Component {
             bidAvailabe: [],
             productId: this.props.productId,
             bidder_Id: this.props.bidder_Id,
+            category: '',
             bidder_firstname: '',
             bidder_lastname: '',
             bidder_email: '',
             bidder_phone: '',
             bidder_price: '',
             bidder_location: '',
-            Ischecked: 0
+            Ischecked: 0,
+            highest: 0,
+            source: null,
+
+            digit: 0,
+            date: new Date().toLocaleString(),
+            time: new Date().toLocaleTimeString(),
+            seconds: new Date().getSeconds(),
+            
         }
         this.toggleBid = this.toggleBid.bind(this);
         this.toggleShowBids = this.toggleShowBids.bind(this);
@@ -172,7 +183,17 @@ class ProductWrapper extends Component {
         this.handleChange = this.handleChange.bind(this)
         this.seeBidders = this.seeBidders.bind(this);
         this.radioHandler = this.radioHandler.bind(this);
+        this.getImage = this.getImage.bind(this)
+        this.highest = this.highest.bind(this)
     }
+
+    getImage(endPointUrl, name, stateVariable) {
+        axios.get(`${endPointUrl}/${name}`, { responseType: 'arraybuffer' })
+          .then(response => {
+            const base64 = btoa(new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), ''),);
+            this.setState({ [stateVariable]: "data:;base64," + base64 });
+          });
+      }
 
     toggleBid() {
         (!this.state.show ?
@@ -234,7 +255,20 @@ class ProductWrapper extends Component {
                 alert(err.message)
             })
     }
-    //
+
+    //method for the highest bidder
+    highest() {
+        axios.get(`/highestBid/${this.state.productId}`)
+            .then((res) => {
+
+                this.setState({highest:res.data[0].highestBid})            
+            }).catch((err) => {
+                alert(err.message)
+            })
+    }
+
+   
+    //radio button handler
     radioHandler() {
         (this.state.Ischecked ?
             this.setState({ Ischecked: 0 })
@@ -243,19 +277,53 @@ class ProductWrapper extends Component {
         )
     }
 
+    componentDidMount(){
+        this.getImage('/image',`${this.props.image}`,'source');
+       this.highest();
+    
+    };
+
+    clearInterval=()=>{
+        clearInterval(this.myTime);
+    };
+
     render() {
-        let baton = <button>pay</button>
+        let baton = <button>WINNER</button>
+        const {digit, date, time, seconds, distance} = this.state
         return (
             <div style={{ maxWidth: "60%", Height: "auto", border: "2px solid grey", margin: "10px auto", padding: "20px" }} className="mappedItems">
                 <div className="item_info">
-                    <div>Image here</div>
                     <div>image: {this.props.image}</div>
-                    <img src={this.props.image} />
-                    <div>name: {this.props.name}</div>
+                    <img src={this.state.source} />
+                    <thead>
+                        <tr>
+                            <td>Name</td>
+                            <td>Price</td>
+                            <td>Location</td>
+                            <td>Phone</td>
+                            <td>Product_Id</td>
+                            <td>category</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{this.props.name}</td>
+                            <td>{this.props.price}</td>
+                            <td>{this.props.location}</td>
+                            <td>{this.props.phone}</td>
+                            <td>{this.props.productId}</td>
+                            <td>{this.props.category}</td>
+                        </tr>
+
+                    </tbody>
+                    <div>
+                     {date}  {distance}
+                    </div>
+                    {/* <div>name: {this.props.name}</div>
                     <div>price: {this.props.price}</div>
                     <div>location: {this.props.location}</div>
                     <div>phone: {this.props.phone}</div>
-                    <div>product_Id: {this.props.productId}</div>
+                    <div>product_Id: {this.props.productId}</div> */}
 
                     <div className="btn-product">
                         <div><button onClick={this.openChat} value={this.props.phone}>chat</button></div>
@@ -265,12 +333,12 @@ class ProductWrapper extends Component {
                                 this.state.show ?
                                     <>
                                         <div className="bid_toggle">
-                                            <div><input name="bidder_phone" placeholder="bidderPhone" value={this.state.bidder_phone} onChange={this.handleChange} /></div>
-                                            <div><input name="bidder_price" placeholder="bidderPrice" value={this.state.bidder_price} onChange={this.handleChange} /></div>
-                                            <div><input name="bidder_location" placeholder="bidderLocation" value={this.state.bidder_location} onChange={this.handleChange} /></div>
-                                            <div>
-                                                <label for="publicBidder">Public</label>
-                                                <input type="radio" id="anonymousBidder" name="bidder-identity" checked={this.state.Ischecked} onChange={this.radioHandler} />
+                                            <div><input name="bidder_phone" placeholder="bidder Phone" value={this.state.bidder_phone} onChange={this.handleChange} /></div>
+                                            <div><input name="bidder_price" placeholder="bidder Price" value={this.state.bidder_price} onChange={this.handleChange} /></div>
+                                            <div><input name="bidder_location" placeholder="bidder Location" value={this.state.bidder_location} onChange={this.handleChange} /></div>
+                                            <div className="radio-div">
+                                                <div><label for="publicBidder">Public</label></div>
+                                                <div className="radioo"><input type="radio" id="anonymousBidder" name="bidder-identity" checked={this.state.Ischecked} onChange={this.radioHandler} /></div>
                                             </div>
                                             <div><button onClick={this.postBids}> PLACE BID</button></div>
                                         </div>
@@ -289,6 +357,7 @@ class ProductWrapper extends Component {
                                     <td>Location</td>
                                     <td>Price</td>
                                     <td>Date</td>
+                                    <td>Expiry</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -296,17 +365,19 @@ class ProductWrapper extends Component {
                                     this.state.bidAvailabe.map((b, i) => (
                                         <tr>
                                             <td>{(b.visible ? `${b.firstname} ${b.lastname}` : "Anonymous")}</td>
-                                            <td>{b.firstname}-{b.lastname}</td>
+                                            <td>{(b.visible ? `${b.phone}` : "Anonymous")}</td>
+                                            {/* <td>`{b.firstname}-{b.lastname}`</td> */}
                                             <td>{(b.visible ? b.bidder_location : "Anonymous")}</td>
                                             <td>{b.bidder_price}</td>
                                             <td>{b.bidder_time.split('.')[0]}</td>
-                                            <td>{(b.visible ? baton: "low")}</td>
+                                            <td>{(b.bidder_price === this.state.highest ? baton : "low")}</td>
                                         </tr>
                                     ))
                                     :
                                     null
                                 }
                             </tbody>
+
                         </div>
                     </div>
                 </div>

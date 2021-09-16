@@ -29,8 +29,9 @@ select, input{
 .item-details{
     /* background-color: 	rgba(0,163,202,255); */
     background-color: teal;
-    width: 40%;
-    margin: 10px auto;
+    width: 100%;
+    /* margin: 10px auto; */
+    height: 400px;
 }
 .item-description input, .item-description #category-select{
     margin: 10px;
@@ -38,6 +39,10 @@ select, input{
     background-color: #e3eaf4;
     color: black;
     font-size: 20px;
+}
+
+.item-description{
+    width: 100%;
 }
 
 .submission-btns .send-btn, .submission-btns .cancel-btn{
@@ -72,4 +77,32 @@ select, input{
     cursor: pointer;
     background-color: teal;
     transform: scale(1.2);
+}
+
+.auction-flex{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 0 auto;
+}
+.auction-flex form{
+    width: 80%;
+}
+.form{
+    width: 60%;
+    height: 500px;
+    margin-left: 0;
+}
+
+.vertical{
+    border-left: 6px solid teal;
+  height: 500px;
+}
+
+.auction-image{
+    border-radius: 50%;
+}
+
+.auction-flex .toggle-auction{
+    border-radius: 50%;
 }

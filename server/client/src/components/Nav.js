@@ -17,7 +17,7 @@ class Nav extends Component {
         }
         this.showSidebar = this.showSidebar.bind(this);
     }
-    
+
     showSidebar() {
         if (document.getElementById('nav-menu').style.height === '0px') {
             document.getElementById('cont').style.display = "block"
@@ -42,7 +42,15 @@ class Nav extends Component {
                         <Link className="Nav-links" to="/products"><span className="linkText"><FaProductHunt />Products</span></Link>
                         <Link className="Nav-links" to="/about"><span className="linkText"><FaAddressCard />About</span></Link>
                         <Link className="Nav-links" to="/contact"><span className="linkText"><FaPhone />Contacts</span></Link>
-                        <Link className="Nav-links" to="/search"><span className="linkText"><FaAddressCard />Search_Result</span></Link>
+                        {this.props.isAdmin ?
+                            <>
+                                <Link className="Nav-links" to="/users"><span className="linkText">Users</span></Link>
+                                <Link className="Nav-links" to="/feeds"><span className="linkText">Feeds</span></Link>
+                            </>
+                            :
+                            null
+                        }
+                        {/* <Link className="Nav-links" to="/search"><span className="linkText"><FaAddressCard />Search_Result</span></Link> */}
                     </div>
                     <div className="nav-section-two" style={{ width: "20%", padding: "20px" }}>
                         <a href="/kill"><span style={{ color: "white" }}>Logout</span></a>
@@ -57,7 +65,7 @@ class Nav extends Component {
                             <Link to="/auction" className="menu-hover"><span><FaGavel />Auction</span></Link>
                             <Link to="/products" className="menu-hover"><span><FaProductHunt />Products</span></Link>
                             <Link to="/kill" className="menu-hover"><span>My Account</span></Link>
-                            <Link to="/about" className="menu-hover"><span>About</span></Link>                            
+                            <Link to="/about" className="menu-hover"><span>About</span></Link>
                             <Link to="/kill" className="menu-hover"><span>Logout</span></Link>
                         </li>
                     </ul>

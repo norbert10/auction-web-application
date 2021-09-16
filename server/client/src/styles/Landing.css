@@ -235,3 +235,9 @@ a{
 .about{
     margin-left: 15px;
 }
+
+.ratings{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
