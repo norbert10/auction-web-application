@@ -15,8 +15,8 @@ import Feeds from './Feeds';
 export class Main extends Component {
     render() {
         return (
-            <div className="Main">
-                <Nav username={this.props.username} isAdmin={this.props.isAdmin}/>
+            <div className="Main" phone={this.props.phone}>
+                <Nav username={this.props.username} isAdmin={this.props.isAdmin} />
                 <Router>
                     <Landing path="/" />
                     <Auction path="/auction" />
@@ -27,7 +27,7 @@ export class Main extends Component {
                     <Users path="/users" />
                     <Feeds path="/feeds" />
                 </Router>
-                <Footer/>
+                <Footer userId={this.props.userId} username={this.props.username}/>
 
             </div>
         )

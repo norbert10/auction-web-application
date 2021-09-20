@@ -39,24 +39,6 @@ export class Products extends Component {
         // this.itemSearch = this.itemSearch.bind(this);
     }
 
-    // changeHandler(e) {
-    //     this.setState({ [e.target.name]: e.target.value });
-    // }
-
-    // search=(searchTerm)=>{
-    //     if(searchTerm.length()>0){
-    //         fetchAsync();
-    //     }else{
-    //         console.log("No search term provided");
-    //     }
-    // }
-    // async fetchAsync (url) {
-    //     let response = await fetch(url);
-    //     let data = await response.json();
-    //     console.log(data);
-    //     return data;
-    //   }
-
     bidNow = (e) => {
         console.log("successful")
     }
@@ -131,6 +113,7 @@ export class Products extends Component {
                         }
 
                     </div>
+                    
                 </div>
                 <div style={{ display: "flex", flexWrap: "wrap" }} className="products">
                     {this.state.message}
@@ -282,16 +265,15 @@ class ProductWrapper extends Component {
         this.getImage('/image', `${this.props.image}`, 'source');
         this.highest();
         // this.intervals();
-        this.myTimer = setInterval(this.countDown, 1000)
-
-    }
+        this.myTimer = setInterval(this.countDown, 1000)      
+    }   
 
     // clearInterval=()=>{
     //     clearInterval(this.myTime);
     // };
 
     countDown() {
-        const endDate = new Date("December 17, 2021 00:00:00").getTime()
+        const endDate = new Date("December 20, 2021 18:10:00").getTime()
         const toDay = new Date().getTime()
         const timeDiff = endDate - toDay
         let seconds = 1000;
@@ -311,9 +293,6 @@ class ProductWrapper extends Component {
             minutes: timeMinutes,
             seconds: timeSeconds,
         });
-        // if(days===0 && hours===0 && minutes ===0 && days===0){
-        //     clearInterval(this.intervals())
-        // }
 
 
     }
@@ -322,10 +301,12 @@ class ProductWrapper extends Component {
     //     setInterval(this.countDown, 1000)
     // }
     clearInterval = ()=>{
-        if(this.state.days===0 && this.state.hours===0&&this.state.minutes===0&& this.state.seconds)
+        if(this.timeDiff < 0)
         clearInterval(this.myTimer)
         console.log(this.myTimer);
     };
+
+    
 
     
 
@@ -401,6 +382,10 @@ class ProductWrapper extends Component {
                                             <div className="radio-div">
                                                 <div><label for="publicBidder">Public</label></div>
                                                 <div className="radioo"><input type="radio" id="anonymousBidder" name="bidder-identity" checked={this.state.Ischecked} onChange={this.radioHandler} /></div>
+                                            </div>
+                                            <div className="visibility-Explanation">
+                                                If checked, all your details will be visible <br />
+                                                If unchecked, your details won't be visible
                                             </div>
                                             <div><button onClick={this.postBids}> PLACE BID</button></div>
                                         </div>

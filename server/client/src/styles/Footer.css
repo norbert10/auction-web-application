@@ -54,3 +54,19 @@ a{
 .about{
     margin-left: 15px;
 }
+
+.send{
+    width: 100px;
+    height: 40px;
+    background-color: wheat;
+}
+.send:hover{
+    transform: scale(1.2);
+    background-color: teal;
+    color: white;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+#message{
+    font-size: 20px;
+}

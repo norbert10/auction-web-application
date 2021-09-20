@@ -1,13 +1,35 @@
 import React, { Component } from 'react'
 import '../styles/Footer.css'
+import axios from 'axios';
 
 export class Footer extends Component {
     constructor(props){
         super(props);
+        this.state={
+            userId:this.props.userId,
+            message:''
+        }
+        this.changeHandler=this.changeHandler.bind(this);
+        this.userMessage = this.userMessage.bind(this)
     }
     changeHandler(e) {
         this.setState({ [e.target.name]: e.target.value })
       }
+    
+    userMessage(e){
+        e.preventDefault()
+        axios.post(`/messages`, {
+            userId: this.state.userId,
+            message: this.state.message
+        })
+        .then((res)=>{
+            alert("message sent")
+        })
+        .catch((err)=>{
+            alert(err.message)
+        })
+    }
+
     render() {
         return (
             <div>
@@ -33,8 +55,9 @@ export class Footer extends Component {
                     </div>
                     <div class="footer-section contact-forms">
                         <h3>Leave us a Message</h3>
-                        <textarea name="message" id="message" cols="30" rows="5"></textarea>
-                        <button class="send">SEND</button>
+                        <textarea type="text" name="message" id="message" cols="30" rows="5"value={this.state.message} onChange={this.changeHandler} />
+                        <br />
+                        <button class="send" onClick={this.userMessage}>SEND</button>
                     </div>
                 </div>
                 <div class="footer-bottom">

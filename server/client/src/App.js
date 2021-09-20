@@ -80,7 +80,8 @@ export class App extends Component {
             IsLoggedIn: res.data.IsLoggedIn,
             username: res.data.usernamee,
             userId: res.data.userId,
-            IsAdmin: res.data.IsAdmin
+            IsAdmin: res.data.IsAdmin,
+            phoneNo: res.data.phoneNo,
           })
         })
         .catch((err) => {
@@ -160,7 +161,7 @@ export class App extends Component {
       <div>
         <hr />
         {(this.state.IsLoggedIn ?
-          <Main username={this.state.username} userId={this.state.userId} isAdmin={this.state.IsAdmin} />
+          <Main username={this.state.username} userId={this.state.userId} isAdmin={this.state.IsAdmin} phoneNo={this.state.phoneNo}/>
           :
           <div className="login-register-wrapper">
             {/* <div className="logoimage">

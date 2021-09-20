@@ -4,6 +4,8 @@ import '../styles/Auction.css'
 import { FaCheck } from 'react-icons/fa'
 import Car from '../Images/auction.png';
 import { FaArrowDown } from 'react-icons/fa';
+import AuctionImg from '../Images/auctionpageimage.jpg'
+import myImage from '../Images/auction_image1.jpg'
 
 export class Auction extends Component {
     constructor(props) {
@@ -111,20 +113,23 @@ export class Auction extends Component {
 
     render() {
         return (
-            <div class="parent">
+            <div class="parent" style={{backgroundImage: `url(${AuctionImg})`}}>
                 <div class="auction-header">
                     <h1>JB AUCTION</h1>
                     <p><em>Auction your item from anywhere, anytime</em></p>
                 </div>
                 <div className="auction-flex">
-                    <div>
+                    {/* <div>
                         <button className="toggle-auction" onClick={this.showAuction}>
                             <h5>HEY THERE! Welcome to <FaArrowDown /></h5>
                             <img className="auction-image" src={Car} />
                         </button>
+                    </div> */}
+                     <div>
+                        <img className="auction-image" src={myImage} />
                     </div>
-                    <div className="vertical"></div>
-                    <div className="form">
+                    {/* <div className="vertical"></div> */}
+                    <div className="form" >
                         <form action="/products" method="POST" encType = "multipart/form-data" >
                             <div className="item-details">
                                 <div className="item-description">

@@ -208,6 +208,26 @@ app.post(`/delete`, (req, res)=>{
     })
 })
 
+app.post(`/messages`, (req,res)=>{
+    console.log(req.body)
+    const {userId, message} = req.body
+    let m = `INSERT INTO messages(user_Id, message)\
+    VALUES(${userId}, '${message}');`
+    db.query(m, (err, result)=>{
+        if(err) throw err;
+        res.status(200).end(JSON.stringify(result))
+    })
+})
+
+app.get('/allmessages', (req, res)=>{
+    let sl = `SELECT user.firstname, user.phone, user.email, messages.message FROM user INNER JOIN messages ON user.id = messages.user_Id;`
+    db.query(sl, (err, result)=>{
+        if(err) throw err;
+        res.status(200).end(JSON.stringify(result))
+    })
+})
+
+
 
 
 app.listen(5000, () => {
