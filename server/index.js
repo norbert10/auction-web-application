@@ -187,18 +187,27 @@ app.post("/postBids", (req, res) => {
 
 })
 
+//getting all users to the users component
+app.get("/users", (req, res) =>{
+    let user = 'SELECT * FROM user'
+    db.query(user, (err, result) => {
+        if (err) throw err;
+        res.status(200).end(JSON.stringify(result));
+    })
 
+})
 
+//delete user from the database
+app.post(`/delete`, (req, res)=>{
+    const id = req.body.id
+    console.log(req.body)
+    let d = `DELETE FROM user WHERE id=? `
+    db.query(d, [id],(err, result)=>{
+        if(err) throw err;
+        res.status(200).end()
+    })
+})
 
-// let data=[
-//     {item_name:"unga",item_price:80,location:'umoja',phone_number:3879370},
-//     {item_name:"unga",item_price:80,location:'umoja',phone_number:3879370},
-//     {item_name:"unga",item_price:80,location:'umoja',phone_number:3879370},
-//     {item_name:"unga",item_price:80,location:'umoja',phone_number:3879370},
-//     {item_name:"unga",item_price:80,location:'umoja',phone_number:3879370},
-//     {item_name:"unga",item_price:80,location:'umoja',phone_number:3879370},
-//     {item_name:"unga",item_price:80,location:'umoja',phone_number:3879370}
-// ]
 
 
 app.listen(5000, () => {

@@ -2,6 +2,12 @@ import React, { Component } from 'react'
 import '../styles/Footer.css'
 
 export class Footer extends Component {
+    constructor(props){
+        super(props);
+    }
+    changeHandler(e) {
+        this.setState({ [e.target.name]: e.target.value })
+      }
     render() {
         return (
             <div>

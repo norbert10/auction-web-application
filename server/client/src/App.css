@@ -4,11 +4,21 @@
 .reset-panel button{
   cursor: pointer;
   font-size: 18px;
+  margin-left: 22px;
 }
+
+
+
+/* .reset-panel{
+  width: 60%;
+  float: right;
+} */
 .reset-and-admin{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  width: 60%;
+  float: right;
 }
 .reset-and-admin button:hover{
   cursor: pointer;
@@ -37,5 +47,85 @@
 }
 
 .success{
+  display: none;
+}
+
+.home-display{
+  display: flex;
+  flex-direction: row;
+  font-size: 22px;
+  justify-content: center;
+  outline: 200vh;
+  outline: auto;
+}
+
+.description{
+  margin: 20px;
+  font-family: sans-serif;
+  outline-width: thin;
+  line-height: 40px;
+  text-align: center;
+}
+
+.description h3{
+  color: teal;
+  font-weight: bold;
+}
+.description p{
+  /* color: brown; */
+  font-family: sans-serif;
+}
+
+.myBtn{
+  background-color: brown;
+  width: 60px;
+  height: 40px;
+  font-size: 26px;
+  border-radius: 50%;
+}
+
+.myBtn:hover{
+  cursor: pointer;
+  background-color: wheat;
+  transform: scale(1.3);
+
+}
+
+.description h6{
+  font-size: 30px;
+  color: green;
+}
+
+.login-image img{
+  border-radius: 50%;
+}
+
+.paraClass{
+  text-align: left;
+  color: black;
+}
+
+.logoimage{
+  float: left;
+  margin: 20PX;
+}
+
+.copy span{
+  color: rgba(189, 189,189);
+  /* margin-left: 20px; */
+  text-align: center;
+}
+.copy{
+  text-align: center;
+  background-color: rgb(37,37,37);
+}
+.logger{
+  display: none;
+  width: 50%;
+}
+
+.successful{
+  font-weight: bold;
+  color: green;
   display: none;
 }

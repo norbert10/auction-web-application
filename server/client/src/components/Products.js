@@ -170,11 +170,10 @@ class ProductWrapper extends Component {
             highest: 0,
             source: null,
 
-            digit: 0,
-            date: new Date().toLocaleString(),
-            time: new Date().toLocaleTimeString(),
-            seconds: new Date().getSeconds(),
-            
+            days: 0,
+            hours: 0,
+            minutes: 0,
+            seconds: 0
         }
         this.toggleBid = this.toggleBid.bind(this);
         this.toggleShowBids = this.toggleShowBids.bind(this);
@@ -185,15 +184,17 @@ class ProductWrapper extends Component {
         this.radioHandler = this.radioHandler.bind(this);
         this.getImage = this.getImage.bind(this)
         this.highest = this.highest.bind(this)
+        this.countDown = this.countDown.bind(this)
+        // this.intervals = this.intervals.bind(this);
     }
 
     getImage(endPointUrl, name, stateVariable) {
         axios.get(`${endPointUrl}/${name}`, { responseType: 'arraybuffer' })
-          .then(response => {
-            const base64 = btoa(new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), ''),);
-            this.setState({ [stateVariable]: "data:;base64," + base64 });
-          });
-      }
+            .then(response => {
+                const base64 = btoa(new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), ''),);
+                this.setState({ [stateVariable]: "data:;base64," + base64 });
+            });
+    }
 
     toggleBid() {
         (!this.state.show ?
@@ -261,13 +262,13 @@ class ProductWrapper extends Component {
         axios.get(`/highestBid/${this.state.productId}`)
             .then((res) => {
 
-                this.setState({highest:res.data[0].highestBid})            
+                this.setState({ highest: res.data[0].highestBid })
             }).catch((err) => {
                 alert(err.message)
             })
     }
 
-   
+
     //radio button handler
     radioHandler() {
         (this.state.Ischecked ?
@@ -277,19 +278,60 @@ class ProductWrapper extends Component {
         )
     }
 
-    componentDidMount(){
-        this.getImage('/image',`${this.props.image}`,'source');
-       this.highest();
-    
+    componentDidMount() {
+        this.getImage('/image', `${this.props.image}`, 'source');
+        this.highest();
+        // this.intervals();
+        this.myTimer = setInterval(this.countDown, 1000)
+
+    }
+
+    // clearInterval=()=>{
+    //     clearInterval(this.myTime);
+    // };
+
+    countDown() {
+        const endDate = new Date("December 17, 2021 00:00:00").getTime()
+        const toDay = new Date().getTime()
+        const timeDiff = endDate - toDay
+        let seconds = 1000;
+        const minutes = seconds * 60;
+        const hours = minutes * 60
+        let days = hours * 24
+        console.log(timeDiff)
+
+        let timeDays = Math.floor(timeDiff / days)
+        let timeHours = Math.floor((timeDiff % days) / hours)
+        let timeMinutes = Math.floor((timeDiff % hours) / minutes)
+        let timeSeconds = Math.floor((timeDiff % minutes) / seconds);
+
+        this.setState({
+            days: timeDays,
+            hours: timeHours,
+            minutes: timeMinutes,
+            seconds: timeSeconds,
+        });
+        // if(days===0 && hours===0 && minutes ===0 && days===0){
+        //     clearInterval(this.intervals())
+        // }
+
+
+    }
+
+    // intervals() {
+    //     setInterval(this.countDown, 1000)
+    // }
+    clearInterval = ()=>{
+        if(this.state.days===0 && this.state.hours===0&&this.state.minutes===0&& this.state.seconds)
+        clearInterval(this.myTimer)
+        console.log(this.myTimer);
     };
 
-    clearInterval=()=>{
-        clearInterval(this.myTime);
-    };
+    
 
     render() {
-        let baton = <button>WINNER</button>
-        const {digit, date, time, seconds, distance} = this.state
+        let baton = <button>HIGHEST</button>
+        const { digit, date, time, seconds, distance } = this.state
         return (
             <div style={{ maxWidth: "60%", Height: "auto", border: "2px solid grey", margin: "10px auto", padding: "20px" }} className="mappedItems">
                 <div className="item_info">
@@ -316,14 +358,34 @@ class ProductWrapper extends Component {
                         </tr>
 
                     </tbody>
-                    <div>
-                     {date}  {distance}
+                    <div className="timer_header">TIME LEFT</div>
+                    <div className="timer">
+                        <article>
+                            <p>
+                                {this.state.days < 10 ? "0" + this.state.days : this.state.days}
+                            </p>
+                            <h3>Days</h3>
+                        </article>
+                        <article>
+                            <p>
+                                {this.state.hours < 10 ? "0" + this.state.hours : this.state.hours}
+                            </p>
+                            <h3>Hours</h3>
+                        </article>
+                        <article>
+                            <p>
+                                {this.state.minutes < 10 ? "0" + this.state.minutes : this.state.minutes}
+                            </p>
+                            <h3>Minutes</h3>
+                        </article>
+                        <article>
+                            <p>
+                                {this.state.seconds < 10 ? "0" + this.state.seconds : this.state.seconds}
+                            </p>
+                            <h3>Seconds</h3>
+                        </article>
                     </div>
-                    {/* <div>name: {this.props.name}</div>
-                    <div>price: {this.props.price}</div>
-                    <div>location: {this.props.location}</div>
-                    <div>phone: {this.props.phone}</div>
-                    <div>product_Id: {this.props.productId}</div> */}
+
 
                     <div className="btn-product">
                         <div><button onClick={this.openChat} value={this.props.phone}>chat</button></div>

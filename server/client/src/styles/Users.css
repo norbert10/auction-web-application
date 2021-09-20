@@ -1,0 +1,40 @@
+.users-list{
+    background-color: teal;
+    color: black
+    /* min-height: 400px; */
+}
+
+.users{
+    margin: 10px;
+}
+.users-header{
+    margin-left: 15%;
+    margin-top: 50px;
+}
+
+.users-and-delete{
+    display: flex;
+}
+
+.users-and-delete .delete{
+    text-align: center;
+}
+
+.delete .delete-btn{
+    width: 100px;
+    height: 40px;
+    background-color: wheat;
+
+}
+.delete .delete-box{
+    height: 40px;
+}
+
+.delete .delete-btn:hover{
+   transform: scale(1.2);
+    background-color: teal;
+    color: white;
+    cursor: pointer;
+    text-transform: uppercase;
+
+}
