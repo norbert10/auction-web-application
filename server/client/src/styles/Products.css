@@ -136,8 +136,37 @@ td{
 
 .visibility-Explanation{
     display: none;
-    color: grey;
+    color: red;
+    font-weight: bold;
 }
 .radio-div:hover +.visibility-Explanation{
     display: block;
+}
+.payment{
+    /* display: none; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.pay{
+    display: none;
+}
+.payer{
+    color: green;
+    font-weight: bold;
+}
+.low-bid{
+    color: red;
+    font-weight: bold;
+}
+
+.expired{
+    display: none;
+    background-color: red;
+    color: white;
+    width: 10%;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-left: 40px;
 }

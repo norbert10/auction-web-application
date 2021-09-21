@@ -3,47 +3,58 @@ import '../styles/Feeds.css'
 import axios from 'axios';
 
 export class Feeds extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state ={
-    
-            feeds : []
+        this.state = {
+
+            feeds: []
         }
-        this.messages=this.messages.bind(this);
+        this.messages = this.messages.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.messages();
     }
 
-    messages(e){
+    messages(e) {
         axios.get('/allmessages')
-        .then((res)=>{
-            this.setState({
-                feeds: res.data
-            })
+            .then((res) => {
+                this.setState({
+                    feeds: res.data
+                })
 
-        })
-        .catch((err)=>{
-            alert(err.message)
-        });
+            })
+            .catch((err) => {
+                alert(err.message)
+            });
     }
- 
+
 
     render() {
         return (
             <div className="feeds">
                 <div>
-                    <h4>messages</h4>
-                    {this.state.feeds.map((d, index)=>(
-                       <div>
-                           <span>{d.firstname}</span>
-                           <span>{d.phone}</span>
-                           <span>{d.email}</span>
-                           <span>{d.message}</span>
-                       </div> 
-                    ))
-                }
+                    <h4>MESSAGES</h4>
+                    <thead>
+                        <tr>
+                            <td>Username</td>
+                            <td>Phone number</td>
+                            <td>Email Address</td>
+                            <td>Message</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            this.state.feeds.map((d, index) => (
+                                <tr>
+                                    <td>{d.firstname}</td>
+                                    <td>{d.phone}</td>
+                                    <td>{d.email}</td>
+                                    <td>{d.message}</td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
                 </div>
                 <div>
                     <h4>Ratings</h4>

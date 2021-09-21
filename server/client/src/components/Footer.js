@@ -54,7 +54,7 @@ export class Footer extends Component {
                         </ul>
                     </div>
                     <div class="footer-section contact-forms">
-                        <h3>Leave us a Message</h3>
+                        <h3>Leave a Message/Report</h3>
                         <textarea type="text" name="message" id="message" cols="30" rows="5"value={this.state.message} onChange={this.changeHandler} />
                         <br />
                         <button class="send" onClick={this.userMessage}>SEND</button>

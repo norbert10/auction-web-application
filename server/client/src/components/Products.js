@@ -113,7 +113,7 @@ export class Products extends Component {
                         }
 
                     </div>
-                    
+
                 </div>
                 <div style={{ display: "flex", flexWrap: "wrap" }} className="products">
                     {this.state.message}
@@ -156,7 +156,8 @@ class ProductWrapper extends Component {
             days: 0,
             hours: 0,
             minutes: 0,
-            seconds: 0
+            seconds: 0,
+            timeUp: false
         }
         this.toggleBid = this.toggleBid.bind(this);
         this.toggleShowBids = this.toggleShowBids.bind(this);
@@ -167,7 +168,8 @@ class ProductWrapper extends Component {
         this.radioHandler = this.radioHandler.bind(this);
         this.getImage = this.getImage.bind(this)
         this.highest = this.highest.bind(this)
-        this.countDown = this.countDown.bind(this)
+        // this.countDown = this.countDown.bind(this)
+        this.payNow = this.payNow.bind(this)
         // this.intervals = this.intervals.bind(this);
     }
 
@@ -199,7 +201,7 @@ class ProductWrapper extends Component {
         window.location.href = `https://wa.me/${e.target.value}`
     }
 
-    //post bidds to the database
+    //post bids to the database
     postBids(e) {
         e.preventDefault();
         if (this.state.bidder_price == '' || this.state.bidder_phone == '' || this.state.bidder_location == '') {
@@ -265,53 +267,95 @@ class ProductWrapper extends Component {
         this.getImage('/image', `${this.props.image}`, 'source');
         this.highest();
         // this.intervals();
-        this.myTimer = setInterval(this.countDown, 1000)      
-    }   
+
+        // this.myTimer = setInterval(this.countDown, 1000)
+        setInterval(() => {
+            const eventDate = new Date("September 21, 2021 17:11:00").getTime()
+            const now = new Date().getTime()
+            const difference = eventDate - now
+            if (difference < 1) {
+                document.getElementsByClassName('btn-product')[0].style.display='none'
+                document.getElementsByClassName('expired')[0].style.display='block'
+                this.setState({ timeUp: true });
+            } else {
+                let days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                let hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+                let minutes = Math.floor((difference / (1000 * 60)) % 60);
+                let seconds = Math.floor((difference / (1000)) % 60);
+                this.setState({
+                    hours: hours > 9 ? hours : `${hours}`,
+                    minutes: minutes > 9 ? minutes : `${minutes}`,
+                    seconds: seconds > 9 ? seconds : `${seconds}`,
+                    days
+                });
+            }
+        }, 1000)
+    }
+
 
     // clearInterval=()=>{
     //     clearInterval(this.myTime);
     // };
 
-    countDown() {
-        const endDate = new Date("December 20, 2021 18:10:00").getTime()
-        const toDay = new Date().getTime()
-        const timeDiff = endDate - toDay
-        let seconds = 1000;
-        const minutes = seconds * 60;
-        const hours = minutes * 60
-        let days = hours * 24
-        console.log(timeDiff)
+    // countDown() {
+    //     const endDate = new Date("December 21, 2021 18:10:00").getTime()
+    //     const toDay = new Date().getTime()
+    //     const timeDiff = endDate - toDay
+    //     let seconds = 1000;
+    //     const minutes = seconds * 60;
+    //     const hours = minutes * 60
+    //     let days = hours * 24
+    //     console.log(timeDiff)
 
-        let timeDays = Math.floor(timeDiff / days)
-        let timeHours = Math.floor((timeDiff % days) / hours)
-        let timeMinutes = Math.floor((timeDiff % hours) / minutes)
-        let timeSeconds = Math.floor((timeDiff % minutes) / seconds);
+    //     let timeDays = Math.floor(timeDiff / days)
+    //     let timeHours = Math.floor((timeDiff % days) / hours)
+    //     let timeMinutes = Math.floor((timeDiff % hours) / minutes)
+    //     let timeSeconds = Math.floor((timeDiff % minutes) / seconds);
 
-        this.setState({
-            days: timeDays,
-            hours: timeHours,
-            minutes: timeMinutes,
-            seconds: timeSeconds,
-        });
+    //     this.setState({
+    //         days: timeDays,
+    //         hours: timeHours,
+    //         minutes: timeMinutes,
+    //         seconds: timeSeconds,
+    //     });
 
 
-    }
+    // }
 
     // intervals() {
     //     setInterval(this.countDown, 1000)
     // }
-    clearInterval = ()=>{
-        if(this.timeDiff < 0)
-        clearInterval(this.myTimer)
+    clearInterval = () => {
+        if (this.timeDiff < 0)
+            clearInterval(this.myTimer)
         console.log(this.myTimer);
     };
 
-    
+    payNow() {
+        document.getElementsByClassName("pay")[0].style.display = "block";
+        console.log("clicked")
 
-    
+    }
+
+
 
     render() {
-        let baton = <button>HIGHEST</button>
+        // let baton = <button onClick={this.payNow}>
+        //     HIGHEST
+        // </button>
+
+        let baton =
+            <div className="payment">
+                <div className="payer">HIGHEST</div>
+                <button onClick={this.payNow}>PAY NOW</button>
+                <div className="pay">
+                    <span><button>MPESA</button></span>
+                    <span><button onClick={this.openChat}>CHAT</button></span>
+                </div>
+            </div>
+        let low = <div className="low-bid">Low</div>
+        // let myDiv = <div className="payment">mpesa</div>
+
         const { digit, date, time, seconds, distance } = this.state
         return (
             <div style={{ maxWidth: "60%", Height: "auto", border: "2px solid grey", margin: "10px auto", padding: "20px" }} className="mappedItems">
@@ -366,9 +410,9 @@ class ProductWrapper extends Component {
                             <h3>Seconds</h3>
                         </article>
                     </div>
+                    <div className="expired">EXPIRED</div>
 
-
-                    <div className="btn-product">
+                    <div className="btn-product" id="btn-product">
                         <div><button onClick={this.openChat} value={this.props.phone}>chat</button></div>
                         <div>
                             <button onClick={this.toggleBid}>bid</button>
@@ -404,7 +448,7 @@ class ProductWrapper extends Component {
                                     <td>Location</td>
                                     <td>Price</td>
                                     <td>Date</td>
-                                    <td>Expiry</td>
+                                    <td>Response</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -417,15 +461,19 @@ class ProductWrapper extends Component {
                                             <td>{(b.visible ? b.bidder_location : "Anonymous")}</td>
                                             <td>{b.bidder_price}</td>
                                             <td>{b.bidder_time.split('.')[0]}</td>
-                                            <td>{(b.bidder_price === this.state.highest ? baton : "low")}</td>
+                                            <td>{(b.bidder_price === this.state.highest ? baton : low)}</td>
                                         </tr>
                                     ))
                                     :
                                     null
                                 }
                             </tbody>
-
+                            {/* <div className="payment">
+                                <button>MPESA</button>
+                                <button>CHAT</button>
+                            </div> */}
                         </div>
+                        
                     </div>
                 </div>
             </div>
