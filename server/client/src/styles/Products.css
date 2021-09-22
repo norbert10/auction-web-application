@@ -8,6 +8,7 @@
     margin: 0 auto;
     width: 100%;
     height: auto;
+    min-height: 300px;
 }
 
 .mappedItems{
@@ -169,4 +170,7 @@ td{
     font-weight: bold;
     text-align: center;
     margin-left: 40px;
+}
+.products{
+    min-height: 700px;
 }

@@ -44,6 +44,7 @@ export class Auction extends Component {
 
 
             const data = new FormData()
+            data.preventDefault()
             data.append('file', this.state.file)
             data.append('category', this.state.category)
             data.append('item_name', this.state.item_name)

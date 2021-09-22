@@ -4,7 +4,8 @@ const mysql = require('mysql');
 const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const multer = require('multer')
+const multer = require('multer');
+const { accessTokenGenerator } = require('../accessTokenGenerator');
 //to post every object we send from the backend
 // app.use(express.json());
 app.use(cors())
@@ -226,6 +227,108 @@ app.get('/allmessages', (req, res)=>{
         res.status(200).end(JSON.stringify(result))
     })
 })
+
+// app.post(`/mpesa`,accessTokenGenerator,(req, res)=>{
+// let phone =req.body.phone;
+// let amount= req.body.amount;
+// let businessNumber = `174379`;
+
+//     //trims phone in the format of 254799623291
+//     if (String(phone).length === 13) {
+//         phone = String(phone).slice(1);
+//     } else if (String(phone).length === 10) {
+//         phone = "254" + String(phone).slice(1);
+//     } else {
+//         phone = phone
+//     }
+
+//     const endpoint = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
+
+//     //outputs timestamp in the required format
+//     let t = new Date();
+//     let formattedMonth = `${((t.getMonth() + 1) < 10 ? '0' + (t.getMonth() + 1) : '' + t.getMonth() + 1)}`
+//     let formattedDate = `${(t.getDate() < 10 ? '0' + t.getDate() : '' + t.getDate())}`
+//     let formattedHours = `${(t.getHours() < 10 ? '0' + t.getHours() : '' + t.getHours())}`
+//     let formattedMinutes = `${(t.getMinutes() < 10 ? '0' + t.getMinutes() : '' + t.getMinutes())}`
+//     let formattedSeconds = `${(t.getSeconds() < 10 ? '0' + t.getSeconds() : '' + t.getSeconds())}`
+
+//     let timestamp = `${t.getFullYear()}${formattedMonth}${formattedDate}${formattedHours}${formattedMinutes}${formattedSeconds}`;
+//     let password = new Buffer.from('174379' + 'WHLjYyJ0mYAUsWYqRYMcV47mVkGp8vi9' + timestamp).toString('base64');
+
+//     request(
+//         {
+//             method: "POST",
+//             url: endpoint,
+//             headers: {
+//                 "Authorization": "Bearer " + req.access_token
+//             },
+//             json: {
+//                 "BusinessShortCode": `${businessNumber}`,
+//                 "Password": `${password}`,
+//                 "Timestamp": `${timestamp}`,
+//                 "TransactionType": "CustomerPayBillOnline",
+//                 "Amount": `${amount}`,
+//                 "PartyA": `${phone}`,
+//                 "PartyB": `${businessNumber}`,
+//                 "PhoneNumber": `${phone}`,
+//                 "CallBackURL": "https://ac41-41-212-23-116.ngrok.io/stk_callback",
+//                 "AccountReference": "AUCTION",
+//                 "TransactionDesc": "Bidding amount"
+//             }
+//         },
+//         function (error, response) {
+//             if (error) {
+//                 console.log(`===========ERROR============ \n ${error}`);
+//             }
+//             console.log(prettyjson.render(response.body));
+//             const { MerchantRequestID, CheckoutRequestID } = response.body;
+//                 res.status(200).end(MerchantRequestID);
+//         }
+//     );
+
+// })
+
+// app.post('/stk_callback', (req, res) => {
+//     console.log("##==========stk Response============##\n\n");
+//     console.log(prettyjson.render(req.body), '\n\n');
+
+//     let MerchantRequestID = req.body.Body.stkCallback['MerchantRequestID'];
+//     let ResultCode = req.body.Body.stkCallback['ResultCode'];
+//     let CheckoutRequestID = req.body.Body.stkCallback['CheckoutRequestID'];
+
+//     let sql = '';
+
+//     if (ResultCode == 0) {
+//         const data = req.body.Body.stkCallback['CallbackMetadata'].Item;
+//         const search = (searchKey, arr) => {
+//             for (let i = 0; i < arr.length; i++) {
+//                 if (arr[i].Name == searchKey) {
+//                     return arr[i].Value
+//                 }
+//             }
+//         }
+
+//         let AMOUNT = search("Amount", data)
+//         let RECEIPT = search("MpesaReceiptNumber", data);
+//         let TRANSACTIN_DATE = search("TransactionDate", data);
+//         let PHONE = search("PhoneNumber", data);
+
+//         console.log(`AMOUNT: ${AMOUNT}`);
+//         console.log(`RECEIPT: ${RECEIPT}`);
+//         console.log(`TRANSACTIN_DATE: ${TRANSACTIN_DATE}`);
+//         console.log(`PHONE: ${PHONE} \n`);
+
+//     } else {
+//         console.warn("Unable to complete request.\n Rolling back")
+//     }
+
+//     connection.query(sql, (err, result) => {
+//         if (err) throw err;
+//         res.status(200).end();
+//     })
+// });
+
+
 
 
 

@@ -153,6 +153,8 @@ class ProductWrapper extends Component {
             highest: 0,
             source: null,
 
+            mpesa: 0,
+
             days: 0,
             hours: 0,
             minutes: 0,
@@ -171,6 +173,7 @@ class ProductWrapper extends Component {
         // this.countDown = this.countDown.bind(this)
         this.payNow = this.payNow.bind(this)
         // this.intervals = this.intervals.bind(this);
+        this.mpesaPayment = this.mpesaPayment.bind(this)
     }
 
     getImage(endPointUrl, name, stateVariable) {
@@ -270,12 +273,12 @@ class ProductWrapper extends Component {
 
         // this.myTimer = setInterval(this.countDown, 1000)
         setInterval(() => {
-            const eventDate = new Date("September 21, 2021 17:11:00").getTime()
+            const eventDate = new Date("September 21, 2021 20:00:00").getTime()
             const now = new Date().getTime()
             const difference = eventDate - now
             if (difference < 1) {
-                document.getElementsByClassName('btn-product')[0].style.display='none'
-                document.getElementsByClassName('expired')[0].style.display='block'
+                // document.getElementsByClassName('btn-product')[0].style.display = 'none'
+                // document.getElementsByClassName('expired')[0].style.display = 'block'
                 this.setState({ timeUp: true });
             } else {
                 let days = Math.floor(difference / (1000 * 60 * 60 * 24));
@@ -293,38 +296,38 @@ class ProductWrapper extends Component {
     }
 
 
-    // clearInterval=()=>{
-    //     clearInterval(this.myTime);
-    // };
+    clearInterval=()=>{
+        clearInterval(this.myTime);
+    };
 
-    // countDown() {
-    //     const endDate = new Date("December 21, 2021 18:10:00").getTime()
-    //     const toDay = new Date().getTime()
-    //     const timeDiff = endDate - toDay
-    //     let seconds = 1000;
-    //     const minutes = seconds * 60;
-    //     const hours = minutes * 60
-    //     let days = hours * 24
-    //     console.log(timeDiff)
+    countDown() {
+        const endDate = new Date("December 21, 2021 18:10:00").getTime()
+        const toDay = new Date().getTime()
+        const timeDiff = endDate - toDay
+        let seconds = 1000;
+        const minutes = seconds * 60;
+        const hours = minutes * 60
+        let days = hours * 24
+        console.log(timeDiff)
 
-    //     let timeDays = Math.floor(timeDiff / days)
-    //     let timeHours = Math.floor((timeDiff % days) / hours)
-    //     let timeMinutes = Math.floor((timeDiff % hours) / minutes)
-    //     let timeSeconds = Math.floor((timeDiff % minutes) / seconds);
+        let timeDays = Math.floor(timeDiff / days)
+        let timeHours = Math.floor((timeDiff % days) / hours)
+        let timeMinutes = Math.floor((timeDiff % hours) / minutes)
+        let timeSeconds = Math.floor((timeDiff % minutes) / seconds);
 
-    //     this.setState({
-    //         days: timeDays,
-    //         hours: timeHours,
-    //         minutes: timeMinutes,
-    //         seconds: timeSeconds,
-    //     });
+        this.setState({
+            days: timeDays,
+            hours: timeHours,
+            minutes: timeMinutes,
+            seconds: timeSeconds,
+        });
 
 
-    // }
+    }
 
-    // intervals() {
-    //     setInterval(this.countDown, 1000)
-    // }
+    intervals() {
+        setInterval(this.countDown, 1000)
+    }
     clearInterval = () => {
         if (this.timeDiff < 0)
             clearInterval(this.myTimer)
@@ -335,6 +338,21 @@ class ProductWrapper extends Component {
         document.getElementsByClassName("pay")[0].style.display = "block";
         console.log("clicked")
 
+    }
+
+    mpesaPayment() {
+        axios.post(`/mpesa`,
+            {
+                phone: this.props.phone,
+                amount: this.props.price,
+            }
+        )
+            .then((res) => {
+                alert(res.data);
+            })
+            .catch((err) => {
+                alert(err.message)
+            })
     }
 
 
@@ -349,7 +367,7 @@ class ProductWrapper extends Component {
                 <div className="payer">HIGHEST</div>
                 <button onClick={this.payNow}>PAY NOW</button>
                 <div className="pay">
-                    <span><button>MPESA</button></span>
+                    <span><button onClick={this.mpesaPayment}>MPESA</button></span>
                     <span><button onClick={this.openChat}>CHAT</button></span>
                 </div>
             </div>
@@ -473,7 +491,7 @@ class ProductWrapper extends Component {
                                 <button>CHAT</button>
                             </div> */}
                         </div>
-                        
+
                     </div>
                 </div>
             </div>

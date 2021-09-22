@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React, { Component, useState, useEffect, useRef } from 'react'
 import '../styles/Landing.css'
 import { FaSearch } from 'react-icons/fa'
 import { images } from './CarouselData'
@@ -6,59 +6,76 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 
 
-function Landing() {
-    const [currImg, setCurrImg] = useState(0);
-    return (
-        <div style={{ position: "relative" }}>
-            <div id="all">
-                <div id="text">
-                    <h1>JB AUCTION</h1>
-                </div>
-            </div>
-            <div className="carousel">
-                <div className="CarouselInner" style={{ backgroundImage: `url(${images[currImg].img})` }}
-                >
-                    {/* <img src={images[0].img} /> */}
-                    <div className="left" onClick={() => {
-                        currImg > 0 && setCurrImg(currImg - 1);
-                    }}><ArrowBackIosIcon /></div>
-                    <div className="center"></div>
-                    <div className="right" onClick={() => {
-                        currImg < images.length - 1 && setCurrImg(currImg + 1);
-                    }}><ArrowForwardIosIcon /></div>
-                </div>
-            </div>
-            <div>
-                <h4>Rate us</h4>
-                <div className="ratings">
-                    <div>
-                        <label for="publicBidder">Excellent</label>
-                        <input type="radio" name="rate"/>
-                    </div>
-                    <div>
-                    <label for="publicBidder">Good</label>
-                        <input type="radio" name="rate"/>
-                    </div>
-                    <div>
-                    <label for="publicBidder">Fair</label>
-                        <input type="radio" name="rate" />
-                    </div>
-                    <div>
-                    <label for="publicBidder">Poor</label>
-                        <input type="radio" name="rate"/>
-                    </div>
-                </div>
-                <button>Rate</button>
+// function Landing() {
+//     const [currImg, setCurrImg] = useState(0);
+//     return (
+//         <div style={{ position: "relative" }}>
+//             <div id="all">
+//                 <div id="text">
+//                     <h1>JB AUCTION</h1>
+//                 </div>
+//             </div>
+//             <div className="carousel">
+//                 <div className="CarouselInner" style={{ backgroundImage: `url(${images[currImg].img})` }}
+//                 >
+//                     <div className="left" onClick={() => {
+//                         currImg > 0 && setCurrImg(currImg - 1);
+//                     }}><ArrowBackIosIcon /></div>
+//                     <div className="center"></div>
+//                     <div className="right" onClick={() => {
+//                         currImg < images.length - 1 && setCurrImg(currImg + 1);
+//                     }}><ArrowForwardIosIcon /></div>
+//                 </div>
+//             </div>
+//             <div>
+//                 <h4>Rate us</h4>
+//                 <div className="ratings">
+//                     <div>
+//                         <label for="publicBidder">Excellent</label>
+//                         <input type="radio" name="rate"/>
+//                     </div>
+//                     <div>
+//                     <label for="publicBidder">Good</label>
+//                         <input type="radio" name="rate"/>
+//                     </div>
+//                     <div>
+//                     <label for="publicBidder">Fair</label>
+//                         <input type="radio" name="rate" />
+//                     </div>
+//                     <div>
+//                     <label for="publicBidder">Poor</label>
+//                         <input type="radio" name="rate"/>
+//                     </div>
+//                 </div>
+//                 <button>Rate</button>
 
-            </div>
+//             </div>
 
-        </div>
-    );
-}
+//         </div>
+//     );
+// }
 
-export default Landing
+// export default Landing
+
+
+
+
+// import Slider from "react-slick";
+
 
 // export class Landing extends Component {
+//     constructor(props){
+//         super(props);
+//         this.play=this.play.bind(this)
+//         this.pause=this.pause.bind(this)
+//     }
+
+//     play(){
+//         this.slider.slickPlay()
+//     }
+//     pause(){
+//         this.slider.slickPause()
+//     }
 
 
 //     render() {
@@ -95,36 +112,6 @@ export default Landing
 //                         <img src={images[0].img} />
 //                     </div>
 //                 </div>
-//                 <div class="footer">
-//                     <div class="footer-content">
-//                         <div class="footer-section about">
-//                             <h3>JB Auction</h3>
-//                             <p><em>JB Auction is an e-commerce which deals with auctioning. One can bid or auction any item anytime
-//                                 anywhere.</em>
-//                             </p>
-//                             <p><em>Please you are free to reach us any time. We operate 24 hours</em></p>
-//                             <p><em>+254713 627939</em></p>
-//                             <p><em>info@jbauctions.co.ke</em></p>
-//                         </div>
-//                         <div class="footer-section links">
-//                             <h3>Quick Links</h3>
-//                             <ul>
-//                                 <li><a href="#">Events</a></li>
-//                                 <li><a href="#">Contacts</a></li>
-//                                 <li><a href="">Galleries</a></li>
-//                                 <li><a href="#">Help</a></li>
-//                             </ul>
-//                         </div>
-//                         <div class="footer-section contact-forms">
-//                             <h3>Leave us a Message</h3>
-//                             <textarea name="message" id="message" cols="30" rows="5"></textarea>
-//                             <button class="send">SEND</button>
-//                         </div>
-//                     </div>
-//                     <div class="footer-bottom">
-//                         &copy; 2021 JB Auction platform | Designed and Developed by Norbert Guda - 0713627939 - Email:norbertguda@gmail.com
-//                     </div>
-//                 </div>
 
 //             </div>
 //         )
@@ -132,3 +119,9 @@ export default Landing
 // }
 
 // export default Landing
+
+const Landing=()=>{
+    return <div style={{height:'500px', width: '100%'}} >Hey</div>
+}
+
+export default Landing

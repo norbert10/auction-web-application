@@ -75,7 +75,6 @@ export class App extends Component {
       })
         .then((res) => {
           console.log(res.data)
-          // alert(res.data);
           this.setState({
             IsLoggedIn: res.data.IsLoggedIn,
             username: res.data.usernamee,

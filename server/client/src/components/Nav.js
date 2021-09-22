@@ -67,6 +67,7 @@ class Nav extends Component {
                             <Link to="/kill" className="menu-hover"><span>My Account</span></Link>
                             <Link to="/about" className="menu-hover"><span>About</span></Link>
                             <Link to="/kill" className="menu-hover"><span>Logout</span></Link>
+                            <Link to="/embla" className="menu-hover"><span>embla</span></Link>
                         </li>
                     </ul>
                     <span className="menu-hover">Welcome, <strong className="strong-user">{this.props.username}</strong></span>
