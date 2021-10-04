@@ -273,7 +273,7 @@ class ProductWrapper extends Component {
 
         // this.myTimer = setInterval(this.countDown, 1000)
         setInterval(() => {
-            const eventDate = new Date("September 21, 2021 20:00:00").getTime()
+            const eventDate = new Date("September 23, 2021 20:00:00").getTime()
             const now = new Date().getTime()
             const difference = eventDate - now
             if (difference < 1) {

@@ -6,57 +6,56 @@ import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 
 
-// function Landing() {
-//     const [currImg, setCurrImg] = useState(0);
-//     return (
-//         <div style={{ position: "relative" }}>
-//             <div id="all">
-//                 <div id="text">
-//                     <h1>JB AUCTION</h1>
-//                 </div>
-//             </div>
-//             <div className="carousel">
-//                 <div className="CarouselInner" style={{ backgroundImage: `url(${images[currImg].img})` }}
-//                 >
-//                     <div className="left" onClick={() => {
-//                         currImg > 0 && setCurrImg(currImg - 1);
-//                     }}><ArrowBackIosIcon /></div>
-//                     <div className="center"></div>
-//                     <div className="right" onClick={() => {
-//                         currImg < images.length - 1 && setCurrImg(currImg + 1);
-//                     }}><ArrowForwardIosIcon /></div>
-//                 </div>
-//             </div>
-//             <div>
-//                 <h4>Rate us</h4>
-//                 <div className="ratings">
-//                     <div>
-//                         <label for="publicBidder">Excellent</label>
-//                         <input type="radio" name="rate"/>
-//                     </div>
-//                     <div>
-//                     <label for="publicBidder">Good</label>
-//                         <input type="radio" name="rate"/>
-//                     </div>
-//                     <div>
-//                     <label for="publicBidder">Fair</label>
-//                         <input type="radio" name="rate" />
-//                     </div>
-//                     <div>
-//                     <label for="publicBidder">Poor</label>
-//                         <input type="radio" name="rate"/>
-//                     </div>
-//                 </div>
-//                 <button>Rate</button>
+function Landing() {
+    const [currImg, setCurrImg] = useState(0);
+    return (
+        <div style={{ position: "relative" }}>
+            <div id="all">
+                <div id="text">
+                    <h1>JB AUCTION</h1>
+                </div>
+            </div>
+            <div className="carousel">
+                <div className="CarouselInner" style={{ backgroundImage: `url(${images[currImg].img})` }}
+                >
+                    <div className="left" onClick={() => {
+                        currImg > 0 && setCurrImg(currImg - 1);
+                    }}><ArrowBackIosIcon /></div>
+                    <div className="center"></div>
+                    <div className="right" onClick={() => {
+                        currImg < images.length - 1 && setCurrImg(currImg + 1);
+                    }}><ArrowForwardIosIcon /></div>
+                </div>
+            </div>
+            <div>
+                <h4>Rate us</h4>
+                <div className="ratings">
+                    <div>
+                        <label for="publicBidder">Excellent</label>
+                        <input type="radio" name="rate"/>
+                    </div>
+                    <div>
+                    <label for="publicBidder">Good</label>
+                        <input type="radio" name="rate"/>
+                    </div>
+                    <div>
+                    <label for="publicBidder">Fair</label>
+                        <input type="radio" name="rate" />
+                    </div>
+                    <div>
+                    <label for="publicBidder">Poor</label>
+                        <input type="radio" name="rate"/>
+                    </div>
+                </div>
+                <button>Rate</button>
 
-//             </div>
+            </div>
 
-//         </div>
-//     );
-// }
+        </div>
+    );
+}
 
-// export default Landing
-
+export default Landing
 
 
 
@@ -119,9 +118,3 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 // }
 
 // export default Landing
-
-const Landing=()=>{
-    return <div style={{height:'500px', width: '100%'}} >Hey</div>
-}
-
-export default Landing

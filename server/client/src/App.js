@@ -221,7 +221,9 @@ export class App extends Component {
                 </div>
                 <div className="reset-and-admin">
                   <div className="reset-panel">
-                    <button onClick={this.toggleReset}>Reset Login Details?</button>
+                    <button onClick={this.toggleReset}>
+                      {/* Reset Login Details? */}
+                      </button>
                     {
                       this.state.show_reset ?
                         <>
