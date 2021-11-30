@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import '../styles/About.css'
+import { FaFacebook } from 'react-icons/fa'
 
 export class About extends Component {
     render() {

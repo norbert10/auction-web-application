@@ -241,3 +241,22 @@ a{
     flex-direction: row;
     justify-content: space-between;
 }
+.mycategories img{
+    width: 500px;
+}
+
+.mycategories{
+    margin: 10px;
+    width: 100%;
+}
+.categories-div{
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-around; */
+    width: 100%;
+}
+
+.categories-div .cats{
+    
+    margin: 10px;
+}

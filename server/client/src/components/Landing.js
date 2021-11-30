@@ -4,6 +4,11 @@ import { FaSearch } from 'react-icons/fa'
 import { images } from './CarouselData'
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
+import Electronics from '../Images/tv.jpg'
+import Car from '../Images/car.jpg'
+import Twositter from '../Images/two-seater.webp'
+import Cooker from '../Images/cooker.jpg'
+import Cow from '../Images/cow.jpg'
 
 
 function Landing() {
@@ -27,7 +32,7 @@ function Landing() {
                     }}><ArrowForwardIosIcon /></div>
                 </div>
             </div>
-            <div>
+            {/* <div className="mycategories">
                 <h4>Rate us</h4>
                 <div className="ratings">
                     <div>
@@ -48,8 +53,32 @@ function Landing() {
                     </div>
                 </div>
                 <button>Rate</button>
+                <h3>Caterories</h3>
+                <div className="categories-div">
+                    <div className="cats">
+                        <h4>Electronics</h4>
+                        <img src={Electronics} />
+                    </div>
+                    <div className="cats">
+                        <h4>Motors</h4>
+                        <img src={Car} />
+                    </div>
+                    <div className="cats">
+                        <h4>Furniture</h4>
+                        <img src={Twositter} />
+                    </div>
+                    <div className="cats">
+                        <h4>House Hold items</h4>
+                        <img src={Cooker} />
+                    </div>
+                    <div className="cats">
+                        <h4>Animals</h4>
+                        <img src={Cow} />
+                    </div>
+                </div>
 
-            </div>
+
+            </div> */}
 
         </div>
     );

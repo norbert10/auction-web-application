@@ -1,16 +1,17 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
 const mysql = require('mysql');
 const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const multer = require('multer');
-const { accessTokenGenerator } = require('../accessTokenGenerator');
-//to post every object we send from the backend
-// app.use(express.json());
+const port = process.env.PORT || 5000;
+
 app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+app.use('/', express.static(path.join(__dirname+'/client/build')));
 
 app.use((error, req, res, next) => {
     console.log('This is the rejected field ->', error.field);
@@ -18,11 +19,12 @@ app.use((error, req, res, next) => {
 
 //creating a connection
 const db = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'auction'
+    host: process.env.DBHOST,
+    user: process.env.DBUSER,
+    password: process.env.DBPASS,
+    database: process.env.DBNAME
 });
+
 db.getConnection((err) => {
     if (err) {
         console.log(err)
@@ -88,34 +90,53 @@ app.post(`/userlogin`, (req, res) => {
 
 
 //inserting products into the database
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, `${__dirname}/images`);
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname);
-    },
-});
-const upload = multer({ storage });
 
-app.post("/products", upload.single('file'), (req, res) => {
+app.post("/products",(req,res)=>{
     console.log(req.body)
     const category = req.body.category
     const item_name = req.body.item_name
     const item_price = req.body.item_price
     const phone_number = req.body.phone_number
     const location = req.body.location
-    const item_image = req.body.file
+    const item_image = req.body.item_image
     const item_video = req.body.item_video
-    db.query('INSERT INTO products (category, item_name, item_price, phone_number, location, item_image, item_video) VALUES (?,?,?,?,?,?,?)',
-        [category, item_name, item_price, phone_number, location, item_image, item_video], (err, result) => {
-            if (err) {
-                console.log(err)
-            }
-            console.log(result);
-            res.status(200).end();
-        })
+    db.query('INSERT INTO products (category, item_name, item_price, phone_number, location, item_image, item_video) VALUES (?,?,?,?,?,?,?)', 
+    [category, item_name, item_price, phone_number, location, item_image, item_video], (err, result)=>{
+        if(err){
+            console.log(err)
+        }
+        console.log(result);
+        res.status(200).end();
+    })
 })
+// const storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, `${__dirname}/images`);
+//     },
+//     filename: function (req, file, cb) {
+//         cb(null, file.originalname);
+//     },
+// });
+// const upload = multer({ storage });
+
+// app.post("/products", upload.single('file'), (req, res) => {
+//     console.log(req.body)
+//     const category = req.body.category
+//     const item_name = req.body.item_name
+//     const item_price = req.body.item_price
+//     const phone_number = req.body.phone_number
+//     const location = req.body.location
+//     const item_image = req.body.file
+//     const item_video = req.body.item_video
+//     db.query('INSERT INTO products (category, item_name, item_price, phone_number, location, item_image, item_video) VALUES (?,?,?,?,?,?,?)',
+//         [category, item_name, item_price, phone_number, location, item_image, item_video], (err, result) => {
+//             if (err) {
+//                 console.log(err)
+//             }
+//             console.log(result);
+//             res.status(200).end();
+//         })
+// })
 
 app.get(`/highestBid/:productId`, (req, res) => {
     let sql=`SELECT MAX(bidder_price) AS highestBid FROM bids WHERE product_Id = ${req.params.productId};`
@@ -124,13 +145,14 @@ app.get(`/highestBid/:productId`, (req, res) => {
     })
 })
 
-app.get(`/image/:name`, (req, res) => {
-    res.sendFile(__dirname + `/images/${req.params.name}`);
-})
+// app.get(`/image/:name`, (req, res) => {
+//     res.sendFile(__dirname + `/images/${req.params.name}`);
+// })
 
 //retrieving data from database to display it on the product page
 app.get(`/allproducts`, (req, res) => {
-    let sql = 'SELECT * FROM products ORDER BY item_no DESC;'
+    let sql = 'SELECT * FROM products;'
+    // ORDER BY item_no DESC
     db.query(sql, (err, result) => {
         if (err) throw err;
         res.status(200).end(JSON.stringify(result));
@@ -193,7 +215,7 @@ app.get("/users", (req, res) =>{
     let user = 'SELECT * FROM user'
     db.query(user, (err, result) => {
         if (err) throw err;
-        res.status(200).end(JSON.stringify(result));
+        res.status(200).end(JSON.stringify(result)); 
     })
 
 })
@@ -228,111 +250,10 @@ app.get('/allmessages', (req, res)=>{
     })
 })
 
-// app.post(`/mpesa`,accessTokenGenerator,(req, res)=>{
-// let phone =req.body.phone;
-// let amount= req.body.amount;
-// let businessNumber = `174379`;
+app.get('*',(req,res)=>{
+    res.sendFile(path.join(__dirname,'/client/build','index.html'));
+});
 
-//     //trims phone in the format of 254799623291
-//     if (String(phone).length === 13) {
-//         phone = String(phone).slice(1);
-//     } else if (String(phone).length === 10) {
-//         phone = "254" + String(phone).slice(1);
-//     } else {
-//         phone = phone
-//     }
-
-//     const endpoint = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
-
-//     //outputs timestamp in the required format
-//     let t = new Date();
-//     let formattedMonth = `${((t.getMonth() + 1) < 10 ? '0' + (t.getMonth() + 1) : '' + t.getMonth() + 1)}`
-//     let formattedDate = `${(t.getDate() < 10 ? '0' + t.getDate() : '' + t.getDate())}`
-//     let formattedHours = `${(t.getHours() < 10 ? '0' + t.getHours() : '' + t.getHours())}`
-//     let formattedMinutes = `${(t.getMinutes() < 10 ? '0' + t.getMinutes() : '' + t.getMinutes())}`
-//     let formattedSeconds = `${(t.getSeconds() < 10 ? '0' + t.getSeconds() : '' + t.getSeconds())}`
-
-//     let timestamp = `${t.getFullYear()}${formattedMonth}${formattedDate}${formattedHours}${formattedMinutes}${formattedSeconds}`;
-//     let password = new Buffer.from('174379' + 'WHLjYyJ0mYAUsWYqRYMcV47mVkGp8vi9' + timestamp).toString('base64');
-
-//     request(
-//         {
-//             method: "POST",
-//             url: endpoint,
-//             headers: {
-//                 "Authorization": "Bearer " + req.access_token
-//             },
-//             json: {
-//                 "BusinessShortCode": `${businessNumber}`,
-//                 "Password": `${password}`,
-//                 "Timestamp": `${timestamp}`,
-//                 "TransactionType": "CustomerPayBillOnline",
-//                 "Amount": `${amount}`,
-//                 "PartyA": `${phone}`,
-//                 "PartyB": `${businessNumber}`,
-//                 "PhoneNumber": `${phone}`,
-//                 "CallBackURL": "https://ac41-41-212-23-116.ngrok.io/stk_callback",
-//                 "AccountReference": "AUCTION",
-//                 "TransactionDesc": "Bidding amount"
-//             }
-//         },
-//         function (error, response) {
-//             if (error) {
-//                 console.log(`===========ERROR============ \n ${error}`);
-//             }
-//             console.log(prettyjson.render(response.body));
-//             const { MerchantRequestID, CheckoutRequestID } = response.body;
-//                 res.status(200).end(MerchantRequestID);
-//         }
-//     );
-
-// })
-
-// app.post('/stk_callback', (req, res) => {
-//     console.log("##==========stk Response============##\n\n");
-//     console.log(prettyjson.render(req.body), '\n\n');
-
-//     let MerchantRequestID = req.body.Body.stkCallback['MerchantRequestID'];
-//     let ResultCode = req.body.Body.stkCallback['ResultCode'];
-//     let CheckoutRequestID = req.body.Body.stkCallback['CheckoutRequestID'];
-
-//     let sql = '';
-
-//     if (ResultCode == 0) {
-//         const data = req.body.Body.stkCallback['CallbackMetadata'].Item;
-//         const search = (searchKey, arr) => {
-//             for (let i = 0; i < arr.length; i++) {
-//                 if (arr[i].Name == searchKey) {
-//                     return arr[i].Value
-//                 }
-//             }
-//         }
-
-//         let AMOUNT = search("Amount", data)
-//         let RECEIPT = search("MpesaReceiptNumber", data);
-//         let TRANSACTIN_DATE = search("TransactionDate", data);
-//         let PHONE = search("PhoneNumber", data);
-
-//         console.log(`AMOUNT: ${AMOUNT}`);
-//         console.log(`RECEIPT: ${RECEIPT}`);
-//         console.log(`TRANSACTIN_DATE: ${TRANSACTIN_DATE}`);
-//         console.log(`PHONE: ${PHONE} \n`);
-
-//     } else {
-//         console.warn("Unable to complete request.\n Rolling back")
-//     }
-
-//     connection.query(sql, (err, result) => {
-//         if (err) throw err;
-//         res.status(200).end();
-//     })
-// });
-
-
-
-
-
-
-app.listen(5000, () => {
+app.listen(port, () => {
     console.log('Server running on port 5000')
 })

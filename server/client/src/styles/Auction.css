@@ -104,6 +104,7 @@ select, input{
 .auction-image{
     /* border-radius: 50%; */
     width: 50%;
+    opacity: 0.9;
 }
 
 .auction-flex .toggle-auction{

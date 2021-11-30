@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import '../styles/Contact.css'
+import { FaFacebook } from 'react-icons/fa'
+import { FaWhatsapp } from 'react-icons/fa'
 
 export class Contact extends Component {
     render() {
@@ -18,8 +20,8 @@ export class Contact extends Component {
                     </div>
                     <div class="icons">
                         <h3>Follow us</h3>
-                        <p><i class="fa fa-facebook-square" aria-hidden="true"></i>fabecook </p>
-                        <p><i class="fa fa-whatsapp" aria-hidden="true"></i> WhatsApp</p>
+                        <p><FaFacebook /> fabecook </p>
+                        <p><FaWhatsapp />WhatsApp</p>
                     </div>
                 </div>
             </div>

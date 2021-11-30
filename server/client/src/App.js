@@ -35,7 +35,7 @@ export class App extends Component {
 
     this.requestRegistration = this.requestRegistration.bind(this);
     this.loginRequest = this.loginRequest.bind(this);
-    this.toggleForm = this.toggleForm.bind(this);
+    this.toggleForm = this.toggleForm.bind(this); 
     this.changeHandler = this.changeHandler.bind(this)
     this.toggleReset = this.toggleReset.bind(this)
     this.resetDetails = this.resetDetails.bind(this)
@@ -169,7 +169,7 @@ export class App extends Component {
             <div className="login-heading">
               <h1>JB AUCTION</h1>
             </div>
-            <hr className="login-line" />
+            {/* <hr className="login-line" /> */}
             <div className="home-display">
               <div className="description">
                 <h3>JB AUCTION</h3>
@@ -222,7 +222,7 @@ export class App extends Component {
                 <div className="reset-and-admin">
                   <div className="reset-panel">
                     <button onClick={this.toggleReset}>
-                      {/* Reset Login Details? */}
+                      Reset Login Details?
                       </button>
                     {
                       this.state.show_reset ?
@@ -245,10 +245,10 @@ export class App extends Component {
                 </div>
               </div>
             </div>
-            <div className="copy">
+            {/* <div className="copy">
               <span>@copy Copyright 2021</span> <br />
               <span>Designed and Developed by Norbert Guda phone-+254713627939 email: nobby@gmail.com</span>
-            </div>
+            </div> */}
 
 
             {/* <div className="success">

@@ -132,6 +132,101 @@ export class Products extends Component {
 
 
 //reusable component to display items on the page dynamically
+
+// const ProductWrapper = (props) => {
+//     return (
+//         <div style={{ Width: "60%", maxHeight: "250px", border: "2px solid grey" }} className="mappedItems">
+//             <div>Image here</div>
+//             {/* <div>name: {props.name}</div>
+//             <div>price: {props.price}</div>
+//             <div>location: {props.location}</div>
+//             <div>phone: {props.phone}</div> */}
+
+// <thead>
+//     <tr>
+//         <td>Name</td>
+//         <td>Price</td>
+//         <td>Location</td>
+//         <td>Phone</td>
+//         <td>Product_Id</td>
+//         <td>category</td>
+//     </tr>
+// </thead>
+// <tbody>
+//     <tr>
+//         <td>{props.name}</td>
+//         <td>{props.price}</td>
+//         <td>{props.location}</td>
+//         <td>{props.phone}</td>
+//         <td>{props.productId}</td>
+//         <td>{props.category}</td>
+//     </tr>
+
+// </tbody>
+//             <div><button onClick={this.openChat} value={this.props.phone}>chat</button></div>
+
+
+//         </div>
+//     )
+// }
+
+// class ProductWrapper extends Component {
+//     constructor(props) {
+//         super(props)
+
+//         this.state = {
+//             show: false,
+//             showBids: false,
+//             bidAvailabe: [],
+//             productId: this.props.productId,
+//             bidder_Id: this.props.bidder_Id,
+//             category: '',
+//             bidder_firstname: '',
+//             bidder_lastname: '',
+//             bidder_email: '',
+//             bidder_phone: '',
+//             bidder_price: '',
+//             bidder_location: '',
+//             Ischecked: 0,
+//             highest: 0,
+//             source: null,
+//         }
+//     }
+//     render() {
+//         return (
+//             <div>
+//                 {/* <div>image: {this.props.image}</div> */}
+//                 <img src={this.state.source} />
+//                 <thead>
+//                     <tr>
+//                         <td>Name</td>
+//                         <td>Price</td>
+//                         <td>Location</td>
+//                         <td>Phone</td>
+//                         <td>Product_Id</td>
+//                         <td>category</td>
+//                     </tr>
+//                 </thead>
+//                 <tbody>
+//                     <tr>
+//                         <td>{this.props.name}</td>
+//                         <td>{this.props.price}</td>
+//                         <td>{this.props.location}</td>
+//                         <td>{this.props.phone}</td>
+//                         <td>{this.props.productId}</td>
+//                         <td>{this.props.category}</td>
+//                     </tr>
+
+//                 </tbody>
+//                 <div><button onClick={this.openChat} value={this.props.phone}>chat</button></div>
+//             </div>
+//         )
+//     }
+// }
+
+
+
+
 class ProductWrapper extends Component {
     constructor(props) {
         super(props)
@@ -296,7 +391,7 @@ class ProductWrapper extends Component {
     }
 
 
-    clearInterval=()=>{
+    clearInterval = () => {
         clearInterval(this.myTime);
     };
 
@@ -378,13 +473,13 @@ class ProductWrapper extends Component {
         return (
             <div style={{ maxWidth: "60%", Height: "auto", border: "2px solid grey", margin: "10px auto", padding: "20px" }} className="mappedItems">
                 <div className="item_info">
-                    <div>image: {this.props.image}</div>
+                    {/* <div>image: {this.props.image}</div> */}
                     <img src={this.state.source} />
                     <thead>
                         <tr>
                             <td>Name</td>
                             <td>Price</td>
-                            <td>Location</td>
+                            <td>Location</td> 
                             <td>Phone</td>
                             <td>Product_Id</td>
                             <td>category</td>
